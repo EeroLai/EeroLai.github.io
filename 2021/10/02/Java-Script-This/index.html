@@ -20,29 +20,33 @@
     var CONFIG = {"hostname":"example.com","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
   </script>
 
-  <meta property="og:type" content="website">
-<meta property="og:title" content="Eero的技術筆記">
-<meta property="og:url" content="http://example.com/index.html">
+  <meta name="description" content="什麼是this  this 是 JavaScript 的一個關鍵字。 this 是 function 執行時，自動生成的一個內部物件。 隨著 function 執行場合的不同，this 所指向的值，也會有所不同。 在大多數的情況下，this 會因為 function 的呼叫方式而有所不同。  JavaScipt 的 this JavaScript 的 this 跟其他程式語言慣用的那個 this">
+<meta property="og:type" content="article">
+<meta property="og:title" content="What is &quot;this&quot;">
+<meta property="og:url" content="http://example.com/2021/10/02/Java-Script-This/index.html">
 <meta property="og:site_name" content="Eero的技術筆記">
+<meta property="og:description" content="什麼是this  this 是 JavaScript 的一個關鍵字。 this 是 function 執行時，自動生成的一個內部物件。 隨著 function 執行場合的不同，this 所指向的值，也會有所不同。 在大多數的情況下，this 會因為 function 的呼叫方式而有所不同。  JavaScipt 的 this JavaScript 的 this 跟其他程式語言慣用的那個 this">
 <meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2021-10-02T05:17:24.000Z">
+<meta property="article:modified_time" content="2021-10-02T07:06:16.956Z">
 <meta property="article:author" content="Eero Lai">
 <meta property="article:tag" content="EeroLai, Goblin, Eero">
 <meta name="twitter:card" content="summary">
 
-<link rel="canonical" href="http://example.com/">
+<link rel="canonical" href="http://example.com/2021/10/02/Java-Script-This/">
 
 
 <script id="page-configurations">
   // https://hexo.io/docs/variables.html
   CONFIG.page = {
     sidebar: "",
-    isHome : true,
-    isPost : false,
+    isHome : false,
+    isPost : true,
     lang   : 'en'
   };
 </script>
 
-  <title>Eero的技術筆記</title>
+  <title>What is "this" | Eero的技術筆記</title>
   
 
 
@@ -140,9 +144,10 @@
         <div class="content-wrap">
           
 
-          <div class="content index posts-expand">
+          <div class="content post posts-expand">
             
-      
+
+    
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
@@ -158,10 +163,9 @@
       <meta itemprop="name" content="Eero的技術筆記">
     </span>
       <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2021/10/02/Java-Script-This/" class="post-title-link" itemprop="url">What is "this"</a>
-        </h2>
+        <h1 class="post-title" itemprop="name headline">
+          What is "this"
+        </h1>
 
         <div class="post-meta">
             <span class="post-meta-item">
@@ -185,7 +189,7 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h3 id="什麼是this"><a href="#什麼是this" class="headerlink" title="什麼是this"></a>什麼是this</h3><hr>
+        <h3 id="什麼是this"><a href="#什麼是this" class="headerlink" title="什麼是this"></a>什麼是this</h3><hr>
 <ul>
 <li><code>this</code> 是 JavaScript 的一個關鍵字。</li>
 <li><code>this</code> 是 function 執行時，自動生成的一個內部物件。</li>
@@ -240,107 +244,30 @@
 <p>有人說「Arrow Function 裡面的 this 指向 Arrow Function 外面的 this」，這聽起來很傻，因為Arrow Function 内外 this 就是同一個東西，并沒有存在什麼指向不指向。</p>
 <h4 id="總結"><a href="#總結" class="headerlink" title="總結"></a>總結</h4><p><code>this</code> 就是你 <code>call</code> 一個 <code>Function</code> 時，傳入的第一個參數。（請務必記下來「<code>this</code> 就是 <code>call</code> 的第一個參數」）<br>如果你的呼叫<code>Function</code>方法不是 <code>call</code> ，請想想「轉換程式碼」將它轉乘 <code>call</code> 方法也許就能想情楚了。</p>
 
-      
     </div>
 
     
     
     
+
       <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2021/09/28/hello-world/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Eero Lai">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Eero的技術筆記">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2021/09/28/hello-world/" class="post-title-link" itemprop="url">Hexo 建置</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-              
-
-              <time title="Created: 2021-09-28 20:34:11 / Modified: 20:59:50" itemprop="dateCreated datePublished" datetime="2021-09-28T20:34:11+08:00">2021-09-28</time>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h3 id="安裝-Hexo-cli"><a href="#安裝-Hexo-cli" class="headerlink" title="安裝 Hexo-cli"></a>安裝 Hexo-cli</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ npm install hexo-cli -g</span><br></pre></td></tr></table></figure>
-
-<p>使用Hexo cli建立</p>
-<p>&lt;Folder&gt; 中輸入預計創建的目錄</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ Hexo init &lt;Folder&gt;</span><br></pre></td></tr></table></figure>
+        
 
 
-<h3 id="npm-install"><a href="#npm-install" class="headerlink" title="npm install"></a>npm install</h3><p>進到剛剛創建的目錄後</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ npm install</span><br></pre></td></tr></table></figure>
-
-<p>如果要把Hexo deploy到Github上面，需要安裝</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ npm install hexo-deployer-git –save</span><br></pre></td></tr></table></figure>
-
-<p>Hexo 後台管理工具</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ npm install hexo-admin --save</span><br></pre></td></tr></table></figure>
-
-<h3 id="config-yml"><a href="#config-yml" class="headerlink" title="_config.yml"></a>_config.yml</h3><p>拉到最下面找到deploy配置git</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">deploy:</span><br><span class="line">  type: git</span><br><span class="line">  repo: https://github.com/username/username.github.io.git</span><br><span class="line">  branch: main</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-<h3 id="上傳-git"><a href="#上傳-git" class="headerlink" title="上傳 git"></a>上傳 git</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo d</span><br></pre></td></tr></table></figure>
-
-<p>每次修改後要依序輸入 hexo cl -&gt; hexo g -&gt; hexo d 三避免無法正常更新：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ hexo cl</span><br><span class="line">$ hexo g</span><br><span class="line">$ hexo d</span><br></pre></td></tr></table></figure>
-
-<h3 id="Hexo-Admin"><a href="#Hexo-Admin" class="headerlink" title="Hexo Admin"></a>Hexo Admin</h3><p>先把後台開起來</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ Hexo s </span><br></pre></td></tr></table></figure>
-
-<p>進入<code>http://localhost:4000/admin</code>就可以進行編輯了</p>
-
-      
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2021/09/28/hello-world/" rel="prev" title="Hexo 建置">
+      <i class="fa fa-chevron-left"></i> Hexo 建置
+    </a></div>
+      <div class="post-nav-item"></div>
     </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
       </footer>
+    
   </article>
   
   
-  
-
-
   
 
 
@@ -393,6 +320,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BB%80%E9%BA%BC%E6%98%AFthis"><span class="nav-number">1.</span> <span class="nav-text">什麼是this</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#JavaScipt-%E7%9A%84-this"><span class="nav-number">2.</span> <span class="nav-text">JavaScipt 的 this</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%88%89%E5%80%8B%E4%BE%8B%E5%AD%90"><span class="nav-number">3.</span> <span class="nav-text">舉個例子</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%91%BC%E5%8F%AB-Function"><span class="nav-number">3.1.</span> <span class="nav-text">呼叫 Function</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E9%80%99%E6%A8%A3%EF%BC%8Cthis-%E5%B0%B1%E5%A5%BD%E8%A7%A3%E9%87%8B%E4%BA%86"><span class="nav-number">3.2.</span> <span class="nav-text">這樣，this 就好解釋了</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%85%88%E7%9C%8B-func-p1-p2-%E4%B8%AD%E7%9A%84-this-%E5%A6%82%E4%BD%95%E5%AE%9A%E7%BE%A9%EF%BC%9A"><span class="nav-number">3.3.</span> <span class="nav-text">先看 func(p1, p2) 中的 this 如何定義：</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%86%8D%E7%9C%8B-obj-child-method-p1-p2-%E7%9A%84-this-%E5%A6%82%E4%BD%95%E5%AE%9A%E7%BE%A9"><span class="nav-number">3.4.</span> <span class="nav-text">再看 obj.child.method(p1, p2) 的 this 如何定義</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%9B%9E%E5%88%B0%E6%9C%80%E4%B8%80%E9%96%8B%E5%A7%8B%E7%9A%84%E4%BE%8B%E5%AD%90%EF%BC%9A"><span class="nav-number">4.</span> <span class="nav-text">回到最一開始的例子：</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%AA%9E%E6%B3%95"><span class="nav-number">4.1.</span> <span class="nav-text">[ ] 語法</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Arrow-Function"><span class="nav-number">4.2.</span> <span class="nav-text">Arrow Function</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%B8%BD%E7%B5%90"><span class="nav-number">4.3.</span> <span class="nav-text">總結</span></a></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
