@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  
+  <url>
+    <loc>http://example.com/googleddd6a62b341b05ec.html</loc>
+    
+    <lastmod>2021-10-02</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://example.com/2021/10/02/Java-Script-This/</loc>
+    
+    <lastmod>2021-10-02</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://example.com/2021/09/28/hello-world/</loc>
+    
+    <lastmod>2021-10-02</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://example.com/categories/index.html</loc>
+    
+    <lastmod>2021-10-02</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://example.com/about/index.html</loc>
+    
+    <lastmod>2021-10-02</lastmod>
+    
+  </url>
+  
+
+  <url>
+    <loc>http://example.com/</loc>
+    <lastmod>2021-10-02</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>1.0</priority>
+  </url>
+
+  
+  <url>
+    <loc>http://example.com/tags/JavaScript/</loc>
+    <lastmod>2021-10-02</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>http://example.com/tags/this/</loc>
+    <lastmod>2021-10-02</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+
+  
+  <url>
+    <loc>http://example.com/categories/JavaScript/</loc>
+    <lastmod>2021-10-02</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>http://example.com/categories/%E6%8A%80%E8%A1%93%E7%9B%B8%E9%97%9C/</loc>
+    <lastmod>2021-10-02</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+</urlset>
