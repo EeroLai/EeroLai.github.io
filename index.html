@@ -182,7 +182,7 @@
               <span class="post-meta-item-text">發表於</span>
               
 
-              <time title="創建時間：2021-10-07 19:54:36 / 修改時間：19:59:22" itemprop="dateCreated datePublished" datetime="2021-10-07T19:54:36+08:00">2021-10-07</time>
+              <time title="創建時間：2021-10-07 19:54:36 / 修改時間：20:01:13" itemprop="dateCreated datePublished" datetime="2021-10-07T19:54:36+08:00">2021-10-07</time>
             </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -219,7 +219,7 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h3 id="錯誤"><a href="#錯誤" class="headerlink" title="錯誤"></a>錯誤</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Error Code: 1175. You are using safe update mode and you tried to update a table without a WHERE that uses a KEY column To disable safe mode, toggle the option in Preferences -&gt; SQL Editor -&gt; Query Editor and reconnect.</span><br></pre></td></tr></table></figure>
+          <h3 id="錯誤"><a href="#錯誤" class="headerlink" title="錯誤"></a>錯誤</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Error Code: 1175. You are using safe update mode and you tried to update a table without a WHERE that</span><br><span class="line">uses a KEY column To disable safe mode, toggle the option in Preferences -&gt; SQL Editor -&gt; Query Editor and reconnect.</span><br></pre></td></tr></table></figure>
 
 <h3 id="原因"><a href="#原因" class="headerlink" title="原因"></a>原因</h3><p>mysql有個叫SQL_SAFE_UPDATES的變數開啟的狀態下，在沒有 WHERE 或 LIMIT 條件的 UPDATE 或 DELETE 動作會拒絕執行而即使是有 WHERE 和 LIMIT 條件，但沒有 KEY column 的 WHERE 條件也會拒絕執行。</p>
 <h3 id="解決辦法"><a href="#解決辦法" class="headerlink" title="解決辦法"></a>解決辦法</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">SET SQL_SAFE_UPDATES=0;//關閉</span><br><span class="line">//You want do something...</span><br><span class="line">SET SQL_SAFE_UPDATES=1;//結束後再開啟</span><br></pre></td></tr></table></figure>
