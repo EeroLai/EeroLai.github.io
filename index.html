@@ -182,7 +182,7 @@
               <span class="post-meta-item-text">發表於</span>
               
 
-              <time title="創建時間：2021-10-17 01:16:00 / 修改時間：01:31:07" itemprop="dateCreated datePublished" datetime="2021-10-17T01:16:00+08:00">2021-10-17</time>
+              <time title="創建時間：2021-10-17 01:16:00 / 修改時間：01:34:21" itemprop="dateCreated datePublished" datetime="2021-10-17T01:16:00+08:00">2021-10-17</time>
             </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -221,7 +221,7 @@
       
           <h3 id="1-前言"><a href="#1-前言" class="headerlink" title="1.前言"></a>1.前言</h3><p>前陣子在刻網頁前後端的Template幫助未來開發使用，發現前端頁面 layout 的 nav item 的需要針對 pathname 去判定是否為 <code>active</code> ，由於是 Bootstrap 的關係設定 <code>class</code> 就行了，但還是記錄在這裡未來需要用得時候我能直接過來複製。</p>
 <h3 id="2-Code"><a href="#2-Code" class="headerlink" title="2.Code"></a>2.Code</h3><p>我想用 <code>jQuery</code> 來解決這一件事情也許是最快的，頁面載入時就能自動地去判斷 pathname 去設定對應的 nav item 。</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">$(document).ready(function () &#123;</span><br><span class="line">	$(&#x27;body&#x27;).find(&#x27;a[href=&quot;&#x27; + location.pathname + &#x27;&quot;]&#x27;)　//抓取網頁pathname</span><br><span class="line">    	     .addClass(&#x27;active&#x27;); 　//針對class設定active</span><br><span class="line">&#125;);</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">$(document).ready(function () &#123;</span><br><span class="line">	$(&#x27;body&#x27;).find(&#x27;a[href=&quot;&#x27; + location.pathname + &#x27;&quot;]&#x27;)　//抓取網頁pathname</span><br><span class="line">    	     .addClass(&#x27;active&#x27;); 　//針對class設定active</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
       
     </div>
 
