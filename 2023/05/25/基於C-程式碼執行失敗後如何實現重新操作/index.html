@@ -20,22 +20,20 @@
     var CONFIG = {"hostname":"eerolai.github.io","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"always","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
   </script>
 
-  <meta name="description" content="介紹久久沒使用Hexo, 本來要使用Hexo結果踩了一個坑那就只好順便把它給記錄下來好了">
+  <meta name="description" content="前言最近在實作ETL功能的相關系統需要做大量資料的寫入，所以必須確保資料能夠正確寫入以及清除，系統中需要有失敗後重新操作的需求，在重複操作的過程也必須限定操作次數以免系統卡死。 所以參考一些文獻整理後採取以下的方法來實作。">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Hexo 指令無法使用">
-<meta property="og:url" content="https://eerolai.github.io/2022/10/17/Hexo-%E6%8C%87%E4%BB%A4%E7%84%A1%E6%B3%95%E4%BD%BF%E7%94%A8/index.html">
+<meta property="og:title" content="基於C#程式碼執行失敗後如何實現重新操作">
+<meta property="og:url" content="https://eerolai.github.io/2023/05/25/%E5%9F%BA%E6%96%BCC-%E7%A8%8B%E5%BC%8F%E7%A2%BC%E5%9F%B7%E8%A1%8C%E5%A4%B1%E6%95%97%E5%BE%8C%E5%A6%82%E4%BD%95%E5%AF%A6%E7%8F%BE%E9%87%8D%E6%96%B0%E6%93%8D%E4%BD%9C/index.html">
 <meta property="og:site_name" content="Eero的技術筆記">
-<meta property="og:description" content="介紹久久沒使用Hexo, 本來要使用Hexo結果踩了一個坑那就只好順便把它給記錄下來好了">
+<meta property="og:description" content="前言最近在實作ETL功能的相關系統需要做大量資料的寫入，所以必須確保資料能夠正確寫入以及清除，系統中需要有失敗後重新操作的需求，在重複操作的過程也必須限定操作次數以免系統卡死。 所以參考一些文獻整理後採取以下的方法來實作。">
 <meta property="og:locale" content="zh_TW">
-<meta property="og:image" content="https://eerolai.github.io/images/pasted-7.png">
-<meta property="article:published_time" content="2022-10-17T11:23:39.000Z">
-<meta property="article:modified_time" content="2023-02-22T12:30:16.363Z">
+<meta property="article:published_time" content="2023-05-25T13:47:55.000Z">
+<meta property="article:modified_time" content="2023-05-25T13:48:33.567Z">
 <meta property="article:author" content="Eero Lai">
-<meta property="article:tag" content="Hexo">
+<meta property="article:tag" content="C#">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://eerolai.github.io/images/pasted-7.png">
 
-<link rel="canonical" href="https://eerolai.github.io/2022/10/17/Hexo-%E6%8C%87%E4%BB%A4%E7%84%A1%E6%B3%95%E4%BD%BF%E7%94%A8/">
+<link rel="canonical" href="https://eerolai.github.io/2023/05/25/%E5%9F%BA%E6%96%BCC-%E7%A8%8B%E5%BC%8F%E7%A2%BC%E5%9F%B7%E8%A1%8C%E5%A4%B1%E6%95%97%E5%BE%8C%E5%A6%82%E4%BD%95%E5%AF%A6%E7%8F%BE%E9%87%8D%E6%96%B0%E6%93%8D%E4%BD%9C/">
 
 
 <script id="page-configurations">
@@ -48,7 +46,7 @@
   };
 </script>
 
-  <title>Hexo 指令無法使用 | Eero的技術筆記</title>
+  <title>基於C#程式碼執行失敗後如何實現重新操作 | Eero的技術筆記</title>
   
 
 
@@ -164,7 +162,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-TW">
-    <link itemprop="mainEntityOfPage" href="https://eerolai.github.io/2022/10/17/Hexo-%E6%8C%87%E4%BB%A4%E7%84%A1%E6%B3%95%E4%BD%BF%E7%94%A8/">
+    <link itemprop="mainEntityOfPage" href="https://eerolai.github.io/2023/05/25/%E5%9F%BA%E6%96%BCC-%E7%A8%8B%E5%BC%8F%E7%A2%BC%E5%9F%B7%E8%A1%8C%E5%A4%B1%E6%95%97%E5%BE%8C%E5%A6%82%E4%BD%95%E5%AF%A6%E7%8F%BE%E9%87%8D%E6%96%B0%E6%93%8D%E4%BD%9C/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/EeroLai.jpg">
@@ -177,7 +175,7 @@
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          Hexo 指令無法使用
+          基於C#程式碼執行失敗後如何實現重新操作
         </h1>
 
         <div class="post-meta">
@@ -186,23 +184,17 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">發表於</span>
+              
 
-              <time title="創建時間：2022-10-17 19:23:39" itemprop="dateCreated datePublished" datetime="2022-10-17T19:23:39+08:00">2022-10-17</time>
+              <time title="創建時間：2023-05-25 21:47:55 / 修改時間：21:48:33" itemprop="dateCreated datePublished" datetime="2023-05-25T21:47:55+08:00">2023-05-25</time>
             </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新於</span>
-                <time title="修改時間：2023-02-22 20:30:16" itemprop="dateModified" datetime="2023-02-22T20:30:16+08:00">2023-02-22</time>
-              </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="far fa-folder"></i>
               </span>
               <span class="post-meta-item-text">分類於</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Hexo-%E6%95%99%E5%AD%B8/" itemprop="url" rel="index"><span itemprop="name">Hexo 教學</span></a>
+                  <a href="/categories/C/" itemprop="url" rel="index"><span itemprop="name">C#</span></a>
                 </span>
             </span>
 
@@ -215,8 +207,8 @@
       </span>
       <span class="post-meta-item-text">Disqus：</span>
     
-    <a title="disqus" href="/2022/10/17/Hexo-%E6%8C%87%E4%BB%A4%E7%84%A1%E6%B3%95%E4%BD%BF%E7%94%A8/#disqus_thread" itemprop="discussionUrl">
-      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2022/10/17/Hexo-指令無法使用/" itemprop="commentCount"></span>
+    <a title="disqus" href="/2023/05/25/%E5%9F%BA%E6%96%BCC-%E7%A8%8B%E5%BC%8F%E7%A2%BC%E5%9F%B7%E8%A1%8C%E5%A4%B1%E6%95%97%E5%BE%8C%E5%A6%82%E4%BD%95%E5%AF%A6%E7%8F%BE%E9%87%8D%E6%96%B0%E6%93%8D%E4%BD%9C/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2023/05/25/基於C-程式碼執行失敗後如何實現重新操作/" itemprop="commentCount"></span>
     </a>
   </span>
   
@@ -231,18 +223,13 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <h4 id="介紹"><a href="#介紹" class="headerlink" title="介紹"></a>介紹</h4><p>久久沒使用Hexo, 本來要使用Hexo結果踩了一個坑那就只好順便把它給記錄下來好了</p>
+        <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>最近在實作ETL功能的相關系統需要做大量資料的寫入，所以必須確保資料能夠正確寫入以及清除，系統中需要有失敗後重新操作的需求，在重複操作的過程也必須限定操作次數以免系統卡死。</p>
+<p>所以參考一些文獻整理後採取以下的方法來實作。</p>
 <span id="more"></span>
 
-<p>使用<code>Hexo server</code>出現以下錯誤</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">hexo : 因為這個系統上已停用指令碼執行，所以無法載入 C:\Users\Xuan\AppData\Roaming\npm\hexo.ps1 檔案。如需詳細資訊，請參閱 about_Execution_Policies，網址為 https:/go.microsoft.com/fwlink/?LinkID=135170。</span><br><span class="line">位於 線路:1 字元:1</span><br><span class="line">+ hexo server</span><br><span class="line">+ ~~~~</span><br><span class="line">    + CategoryInfo          : SecurityError: (:) [], PSSecurityException</span><br><span class="line">    + FullyQualifiedErrorId : UnauthorizedAccess</span><br></pre></td></tr></table></figure>
-
-<p>最後研究了一番才知道 windows 10 有些新的安全性設定需要啟用, 怕自己以後也會用到就把它紀錄下來好了</p>
-<ul>
-<li>設定 -&gt; 更新與安全性 -&gt; 開發人員專用 找到PowerShell把他打勾並啟用就可以了</li>
-</ul>
-<p><img src="/images/pasted-7.png" alt="upload successful"></p>
-
+<h2 id="實作方法"><a href="#實作方法" class="headerlink" title="實作方法"></a>實作方法</h2><p>在 C# 中，如果 try&#x2F;catch 中的 try 塊內的程式碼執行失敗，可以使用循環或遞迴的方式來實現重做操作。</p>
+<p>具體來說，可以將 try&#x2F;catch 塊放在循環或遞迴的內部，當 try 塊內的程式碼執行失敗時，就會執行 catch 塊中的程式碼，並重新執行循環或遞迴直到成功為止。下面是一個簡單的範例：</p>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><span class="line"> <span class="comment">//最大重複操作次數</span></span><br><span class="line"><span class="built_in">int</span> maxRetries = <span class="number">3</span>;</span><br><span class="line"><span class="comment">//重複操作次數</span></span><br><span class="line"><span class="built_in">int</span> retries = <span class="number">0</span>;</span><br><span class="line"><span class="comment">//操作結果</span></span><br><span class="line"><span class="built_in">bool</span> success = <span class="literal">false</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">do</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">try</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="comment">// 嘗試執行操作</span></span><br><span class="line">        <span class="keyword">await</span> SomeOperation();</span><br><span class="line">        success = <span class="literal">true</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">catch</span> (Exception ex)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="comment">// 記錄錯誤日誌，這裡可以寫入到文件或數據庫中</span></span><br><span class="line">        Console.WriteLine(<span class="string">$&quot;Error occurred: <span class="subst">&#123;ex.Message&#125;</span>&quot;</span>);</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 如果還有重試次數，等待一段時間後重試</span></span><br><span class="line">        <span class="keyword">if</span> (retries &lt; maxRetries)</span><br><span class="line">        &#123;</span><br><span class="line">            retries++;</span><br><span class="line">            Thread.Sleep(<span class="number">1000</span>); <span class="comment">// 等待 1 秒</span></span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">else</span></span><br><span class="line">        &#123;</span><br><span class="line">            <span class="comment">// 如果已經沒有重試次數了，退出循環</span></span><br><span class="line">            <span class="keyword">break</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125; <span class="keyword">while</span> (!success &amp;&amp; retries &lt; maxRetries);</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> (success)</span><br><span class="line">&#123;</span><br><span class="line">    Console.WriteLine(<span class="string">&quot;Operation completed successfully!&quot;</span>);</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">else</span></span><br><span class="line">&#123;</span><br><span class="line">    Console.WriteLine(<span class="string">&quot;Operation failed after max retries!&quot;</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
     </div>
 
     
@@ -251,7 +238,7 @@
 
       <footer class="post-footer">
           <div class="post-tags">
-              <a href="/tags/Hexo/" rel="tag"># Hexo</a>
+              <a href="/tags/C/" rel="tag"># C#</a>
           </div>
 
         
@@ -260,13 +247,10 @@
         
     <div class="post-nav">
       <div class="post-nav-item">
-    <a href="/2021/10/17/%E9%80%8F%E9%81%8E%E7%B6%B2%E9%A0%81pathname%E4%BD%BFBootstrap%E7%9A%84Active%E7%94%9F%E6%95%88/" rel="prev" title="透過網頁pathname使Bootstrap的Active生效">
-      <i class="fa fa-chevron-left"></i> 透過網頁pathname使Bootstrap的Active生效
+    <a href="/2023/04/30/%E5%B0%81%E8%A3%9DAxios%E7%AE%A1%E7%90%86api/" rel="prev" title="封裝Axios管理api">
+      <i class="fa fa-chevron-left"></i> 封裝Axios管理api
     </a></div>
-      <div class="post-nav-item">
-    <a href="/2022/10/17/Nuxt3-%E9%85%8D%E7%BD%AE%E7%AD%86%E8%A8%98/" rel="next" title="Nuxt3 配置筆記">
-      Nuxt3 配置筆記 <i class="fa fa-chevron-right"></i>
-    </a></div>
+      <div class="post-nav-item"></div>
     </div>
       </footer>
     
@@ -332,7 +316,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BB%8B%E7%B4%B9"><span class="nav-number">1.</span> <span class="nav-text">介紹</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%89%8D%E8%A8%80"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AF%A6%E4%BD%9C%E6%96%B9%E6%B3%95"><span class="nav-number">2.</span> <span class="nav-text">實作方法</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -469,9 +453,9 @@
 </script>
 <script>
   var disqus_config = function() {
-    this.page.url = "https://eerolai.github.io/2022/10/17/Hexo-%E6%8C%87%E4%BB%A4%E7%84%A1%E6%B3%95%E4%BD%BF%E7%94%A8/";
-    this.page.identifier = "2022/10/17/Hexo-指令無法使用/";
-    this.page.title = "Hexo 指令無法使用";
+    this.page.url = "https://eerolai.github.io/2023/05/25/%E5%9F%BA%E6%96%BCC-%E7%A8%8B%E5%BC%8F%E7%A2%BC%E5%9F%B7%E8%A1%8C%E5%A4%B1%E6%95%97%E5%BE%8C%E5%A6%82%E4%BD%95%E5%AF%A6%E7%8F%BE%E9%87%8D%E6%96%B0%E6%93%8D%E4%BD%9C/";
+    this.page.identifier = "2023/05/25/基於C-程式碼執行失敗後如何實現重新操作/";
+    this.page.title = "基於C#程式碼執行失敗後如何實現重新操作";
     };
   NexT.utils.loadComments(document.querySelector('#disqus_thread'), () => {
     if (window.DISQUS) {
