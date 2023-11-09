@@ -157,6 +157,96 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-TW">
+    <link itemprop="mainEntityOfPage" href="https://eerolai.github.io/2023/11/09/Net-Core-7-Ocelot%E5%9F%BA%E6%9C%AC%E9%85%8D%E7%BD%AE/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/EeroLai.jpg">
+      <meta itemprop="name" content="Eero Lai">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Eero的技術筆記">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2023/11/09/Net-Core-7-Ocelot%E5%9F%BA%E6%9C%AC%E9%85%8D%E7%BD%AE/" class="post-title-link" itemprop="url">.Net Core 7 Ocelot基本配置</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">發表於</span>
+              
+
+              <time title="創建時間：2023-11-09 21:33:17 / 修改時間：21:51:51" itemprop="dateCreated datePublished" datetime="2023-11-09T21:33:17+08:00">2023-11-09</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分類於</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/NET/" itemprop="url" rel="index"><span itemprop="name">.NET</span></a>
+                </span>
+            </span>
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Disqus：</span>
+    
+    <a title="disqus" href="/2023/11/09/Net-Core-7-Ocelot%E5%9F%BA%E6%9C%AC%E9%85%8D%E7%BD%AE/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2023/11/09/Net-Core-7-Ocelot基本配置/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>由於近期業務需求需要去幫忙架設 Ocelot的api gateway提供給部門使用，至於為什麼會採用這個而不是常見的 <code>kong</code> 或者是 <code>spring cloud gateway</code> 等等的方式，主要基於部分功能需要上Azure雲能申請的資源有限，部門內部的人員大多數又只會<code>C#</code>，所以只能透過這方式來建立api gateway了，但建立的時候發現官方文件寫的建立方式好像有一點落差，看起來有點像是.net core 6以下的作法，文件上的很多方法實質上看起來應該已經沒辦法用了。</p>
+<p>所以參考一些文獻整理後打算寫一篇來幫助自己未來有需要時可以回憶。</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2023/11/09/Net-Core-7-Ocelot%E5%9F%BA%E6%9C%AC%E9%85%8D%E7%BD%AE/#more" rel="contents">
+                閱讀全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-TW">
     <link itemprop="mainEntityOfPage" href="https://eerolai.github.io/2023/05/25/%E5%9F%BA%E6%96%BCC-%E7%A8%8B%E5%BC%8F%E7%A2%BC%E5%9F%B7%E8%A1%8C%E5%A4%B1%E6%95%97%E5%BE%8C%E5%A6%82%E4%BD%95%E5%AF%A6%E7%8F%BE%E9%87%8D%E6%96%B0%E6%93%8D%E4%BD%9C/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -986,102 +1076,6 @@
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-TW">
-    <link itemprop="mainEntityOfPage" href="https://eerolai.github.io/2021/10/04/Hexo-Disqus-%E8%A8%AD%E5%AE%9A/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/EeroLai.jpg">
-      <meta itemprop="name" content="Eero Lai">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Eero的技術筆記">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2021/10/04/Hexo-Disqus-%E8%A8%AD%E5%AE%9A/" class="post-title-link" itemprop="url">Hexo Disqus 設定</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">發表於</span>
-
-              <time title="創建時間：2021-10-04 21:22:27" itemprop="dateCreated datePublished" datetime="2021-10-04T21:22:27+08:00">2021-10-04</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新於</span>
-                <time title="修改時間：2023-02-22 20:30:16" itemprop="dateModified" datetime="2023-02-22T20:30:16+08:00">2023-02-22</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分類於</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Hexo-%E6%95%99%E5%AD%B8/" itemprop="url" rel="index"><span itemprop="name">Hexo 教學</span></a>
-                </span>
-            </span>
-
-          
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="far fa-comment"></i>
-      </span>
-      <span class="post-meta-item-text">Disqus：</span>
-    
-    <a title="disqus" href="/2021/10/04/Hexo-Disqus-%E8%A8%AD%E5%AE%9A/#disqus_thread" itemprop="discussionUrl">
-      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2021/10/04/Hexo-Disqus-設定/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h3 id="Disqus"><a href="#Disqus" class="headerlink" title="Disqus"></a>Disqus</h3><h4 id="介紹"><a href="#介紹" class="headerlink" title="介紹"></a>介紹</h4><p>我想一個網誌另外一格重要的功能大概就是留言板，為了能夠跟人互動可能就需要加入些套件來做使用</p>
-<p>那這邊我介紹一個蠻多網誌都有使用的 <a target="_blank" rel="noopener" href="https://blog.disqus.com/">Disqus</a></p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2021/10/04/Hexo-Disqus-%E8%A8%AD%E5%AE%9A/#more" rel="contents">
-                閱讀全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
@@ -1153,7 +1147,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">15</span>
+          <span class="site-state-item-count">16</span>
           <span class="site-state-item-name">文章</span>
         </a>
       </div>
@@ -1164,7 +1158,7 @@
         <span class="site-state-item-name">分類</span></a>
       </div>
       <div class="site-state-item site-state-tags">
-        <span class="site-state-item-count">20</span>
+        <span class="site-state-item-count">22</span>
         <span class="site-state-item-name">標籤</span>
       </div>
   </nav>
