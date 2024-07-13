@@ -182,7 +182,7 @@
               <span class="post-meta-item-text">發表於</span>
               
 
-              <time title="創建時間：2024-07-13 16:19:14 / 修改時間：16:22:45" itemprop="dateCreated datePublished" datetime="2024-07-13T16:19:14+08:00">2024-07-13</time>
+              <time title="創建時間：2024-07-13 16:19:14 / 修改時間：16:26:32" itemprop="dateCreated datePublished" datetime="2024-07-13T16:19:14+08:00">2024-07-13</time>
             </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -219,38 +219,15 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h1 id="Nuxt3-如何引入-flowbite"><a href="#Nuxt3-如何引入-flowbite" class="headerlink" title="Nuxt3 如何引入 flowbite"></a>Nuxt3 如何引入 flowbite</h1><h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>Nuxt3相關套件的教學資源真的很少，Nuxt3一直有在更新上導致flowbite套件的使用方法跟網路上文章似乎都有些不一樣了，剛好踩了這個坑就隨手紀錄一下或許有些人會有一樣的問題。</p>
-<h3 id="引入TailwindCss"><a href="#引入TailwindCss" class="headerlink" title="引入TailwindCss"></a>引入TailwindCss</h3><p>1.在nuxt3專案下安裝Tailwindcss</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install --save-dev @nuxtjs/tailwindcss</span><br></pre></td></tr></table></figure>
-
-
-<p>2.Nuxt設定檔加入 Tailwind 模組：</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// nuxt.config.&#123;js,ts&#125;</span></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> <span class="title function_">defineNuxtConfig</span>(&#123;</span><br><span class="line">    <span class="attr">modules</span>: [</span><br><span class="line">        <span class="string">&#x27;@nuxtjs/tailwindcss&#x27;</span></span><br><span class="line">    ]</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
-
-<p>3.tailwind.config.js透過以下建立檔案</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npx tailwindcss init</span><br></pre></td></tr></table></figure>
-
-<p>4.建立一個新的 CSS 檔案.&#x2F;assets&#x2F;css&#x2F;tailwind.css並匯入主要的 Tailwind CSS 指令：</p>
-<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">@tailwind</span> base;</span><br><span class="line"><span class="keyword">@tailwind</span> components;</span><br><span class="line"><span class="keyword">@tailwind</span> utilities;</span><br></pre></td></tr></table></figure>
-
-
-<p>5.在 Tailwind CSS 設定檔中設定 Nuxt 專案的範本路徑：</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable language_">module</span>.<span class="property">exports</span> = &#123;</span><br><span class="line">  <span class="attr">content</span>: [</span><br><span class="line">    <span class="string">&quot;./components/**/*.&#123;js,vue,ts&#125;&quot;</span>,</span><br><span class="line">    <span class="string">&quot;./layouts/**/*.vue&quot;</span>,</span><br><span class="line">    <span class="string">&quot;./pages/**/*.vue&quot;</span>,</span><br><span class="line">    <span class="string">&quot;./plugins/**/*.&#123;js,ts&#125;&quot;</span>,</span><br><span class="line">    <span class="string">&quot;./nuxt.config.&#123;js,ts&#125;&quot;</span>,</span><br><span class="line">  ],</span><br><span class="line">  <span class="attr">theme</span>: &#123;</span><br><span class="line">    <span class="attr">extend</span>: &#123;&#125;,</span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="attr">plugins</span>: [],</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h3 id="引入Flowbite"><a href="#引入Flowbite" class="headerlink" title="引入Flowbite"></a>引入Flowbite</h3><p>1.透過 NPM 安裝 Flowbite 並將它保存在package.json檔案中：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install flowbite</span><br></pre></td></tr></table></figure>
-
-<p>2.需要 Flowbite 做為tailwind.config.js設定中的插件：</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable language_">module</span>.<span class="property">exports</span> = &#123;</span><br><span class="line">  <span class="comment">// other options ...</span></span><br><span class="line">  <span class="attr">plugins</span>: [</span><br><span class="line">    <span class="built_in">require</span>(<span class="string">&#x27;flowbite/plugin&#x27;</span>)</span><br><span class="line">  ],</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>3.將Flowbite的來源JavaScript檔案加入到tailwind.config.js範本路徑中：</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable language_">module</span>.<span class="property">exports</span> = &#123;</span><br><span class="line">  <span class="attr">content</span>: [</span><br><span class="line">    <span class="comment">// other files...</span></span><br><span class="line">    <span class="string">&quot;./node_modules/flowbite/**/*.&#123;js,ts&#125;&quot;</span></span><br><span class="line">  ],</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>4.在專案底下新增plugins資料夾提供client做使用,新增flowbite.client.ts到資料夾底下</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; initFlowbite &#125; <span class="keyword">from</span> <span class="string">&#x27;flowbite&#x27;</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> <span class="title function_">defineNuxtPlugin</span>(<span class="function">(<span class="params">nuxtApp</span>) =&gt;</span> &#123;</span><br><span class="line">    nuxtApp.<span class="property">vueApp</span>.<span class="title function_">mixin</span>(&#123;</span><br><span class="line">        mounted () &#123;</span><br><span class="line">            <span class="title function_">initFlowbite</span>();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
-
-
-
+          <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>Nuxt3相關套件的教學資源真的很少，Nuxt3一直有在更新上導致flowbite套件的使用方法跟網路上文章似乎都有些不一樣了，剛好踩了這個坑就隨手紀錄一下或許有些人會有一樣的問題。</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2024/07/13/Nuxt3-%E5%A6%82%E4%BD%95%E5%BC%95%E5%85%A5-flowbite/#more" rel="contents">
+                閱讀全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
