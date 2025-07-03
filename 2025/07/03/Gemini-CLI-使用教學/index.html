@@ -1,0 +1,554 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.2">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"eerolai.github.io","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"always","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="前言在現代軟體開發中，效率與自動化是關鍵。Gemini CLI 是一個由 Google Gemini 模型驅動的智慧型命令列介面（CLI）工具，旨在成為程式開發者的得力助手。它不僅能理解您的自然語言指令，還能執行程式碼、管理檔案、搜尋資訊，甚至協助您撰寫技術文章。本文將帶您了解如何有效利用 Gemini CLI，提升您的開發工作流程。 Gemini CLI 是什麼？Gemini CLI 是一個基於">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Gemini CLI 使用教學：您的智慧型程式開發助手">
+<meta property="og:url" content="https://eerolai.github.io/2025/07/03/Gemini-CLI-%E4%BD%BF%E7%94%A8%E6%95%99%E5%AD%B8/index.html">
+<meta property="og:site_name" content="Eero的技術筆記">
+<meta property="og:description" content="前言在現代軟體開發中，效率與自動化是關鍵。Gemini CLI 是一個由 Google Gemini 模型驅動的智慧型命令列介面（CLI）工具，旨在成為程式開發者的得力助手。它不僅能理解您的自然語言指令，還能執行程式碼、管理檔案、搜尋資訊，甚至協助您撰寫技術文章。本文將帶您了解如何有效利用 Gemini CLI，提升您的開發工作流程。 Gemini CLI 是什麼？Gemini CLI 是一個基於">
+<meta property="og:locale" content="zh_TW">
+<meta property="article:published_time" content="2025-07-03T13:28:52.000Z">
+<meta property="article:modified_time" content="2025-07-03T13:30:54.579Z">
+<meta property="article:author" content="Eero Lai">
+<meta property="article:tag" content="Gemini">
+<meta property="article:tag" content="CLI">
+<meta property="article:tag" content="AI">
+<meta property="article:tag" content="開發工具">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="https://eerolai.github.io/2025/07/03/Gemini-CLI-%E4%BD%BF%E7%94%A8%E6%95%99%E5%AD%B8/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-TW'
+  };
+</script>
+
+  <title>Gemini CLI 使用教學：您的智慧型程式開發助手 | Eero的技術筆記</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切換導航欄">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Eero的技術筆記</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">懵懂無知的初心者</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首頁</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>關於</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分類</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>歸檔</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-TW">
+    <link itemprop="mainEntityOfPage" href="https://eerolai.github.io/2025/07/03/Gemini-CLI-%E4%BD%BF%E7%94%A8%E6%95%99%E5%AD%B8/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/EeroLai.jpg">
+      <meta itemprop="name" content="Eero Lai">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Eero的技術筆記">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Gemini CLI 使用教學：您的智慧型程式開發助手
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">發表於</span>
+              
+
+              <time title="創建時間：2025-07-03 21:28:52 / 修改時間：21:30:54" itemprop="dateCreated datePublished" datetime="2025-07-03T21:28:52+08:00">2025-07-03</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分類於</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%B7%A5%E5%85%B7/" itemprop="url" rel="index"><span itemprop="name">工具</span></a>
+                </span>
+            </span>
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Disqus：</span>
+    
+    <a title="disqus" href="/2025/07/03/Gemini-CLI-%E4%BD%BF%E7%94%A8%E6%95%99%E5%AD%B8/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2025/07/03/Gemini-CLI-使用教學/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>在現代軟體開發中，效率與自動化是關鍵。Gemini CLI 是一個由 Google Gemini 模型驅動的智慧型命令列介面（CLI）工具，旨在成為程式開發者的得力助手。它不僅能理解您的自然語言指令，還能執行程式碼、管理檔案、搜尋資訊，甚至協助您撰寫技術文章。本文將帶您了解如何有效利用 Gemini CLI，提升您的開發工作流程。</p>
+<h2 id="Gemini-CLI-是什麼？"><a href="#Gemini-CLI-是什麼？" class="headerlink" title="Gemini CLI 是什麼？"></a>Gemini CLI 是什麼？</h2><p>Gemini CLI 是一個基於大型語言模型（LLM）的互動式代理程式。它能夠：</p>
+<ul>
+<li><p><strong>理解自然語言</strong>：您可以直接用中文或英文提問或下達指令，無需學習複雜的命令語法。</p>
+</li>
+<li><p><strong>執行程式碼</strong>：支援多種程式語言的程式碼執行，並能提供執行結果。</p>
+</li>
+<li><p><strong>檔案系統操作</strong>：讀取、寫入、搜尋檔案，甚至根據您的需求修改檔案內容。</p>
+</li>
+<li><p><strong>專案感知</strong>：了解您當前的工作目錄結構，並能根據專案上下文提供更精準的協助。</p>
+</li>
+<li><p><strong>自動化任務</strong>：協助您完成重複性高或需要大量知識查詢的任務，例如撰寫文件、重構程式碼、除錯等。</p>
+</li>
+</ul>
+<h2 id="安裝與設定"><a href="#安裝與設定" class="headerlink" title="安裝與設定"></a>安裝與設定</h2><p>在使用 Gemini CLI 之前，您需要先進行安裝並設定您的 Google Gemini API Key。</p>
+<h3 id="1-安裝-Gemini-CLI"><a href="#1-安裝-Gemini-CLI" class="headerlink" title="1. 安裝 Gemini CLI"></a>1. 安裝 Gemini CLI</h3><p>Gemini CLI 通常可以透過 npm (Node Package Manager) 進行全域安裝。請確保您的系統已安裝 Node.js 和 npm。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install -g @google/gemini-cli</span><br></pre></td></tr></table></figure>
+
+<p><strong>注意</strong>：請參考 <a target="_blank" rel="noopener" href="https://developers.google.com/gemini/docs/cli">Gemini CLI 官方文件</a> 以獲取最新的安裝指南和系統要求。</p>
+<h3 id="2-設定-API-Key"><a href="#2-設定-API-Key" class="headerlink" title="2. 設定 API Key"></a>2. 設定 API Key</h3><p>Gemini CLI 需要您的 Google Gemini API Key 才能與 Gemini 模型進行通訊。您可以從 Google AI Studio 取得您的 API Key。</p>
+<p>取得 API Key 後，建議將其設定為環境變數，以便 Gemini CLI 自動偵測。</p>
+<p><strong>Linux&#x2F;macOS:</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">export</span> GEMINI_API_KEY=<span class="string">&quot;YOUR_API_KEY&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>Windows (Command Prompt):</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">set</span> GEMINI_API_KEY=<span class="string">&quot;YOUR_API_KEY&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>Windows (PowerShell):</strong></p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$env:GEMINI_API_KEY</span>=<span class="string">&quot;YOUR_API_KEY&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p>為了讓 API Key 持久化，您可以將其加入到您的 shell 設定檔中（例如 <code>~/.bashrc</code>, <code>~/.zshrc</code> 或 Windows 的系統環境變數）。</p>
+<h3 id="3-基本指令結構"><a href="#3-基本指令結構" class="headerlink" title="3. 基本指令結構"></a>3. 基本指令結構</h3><p>Gemini CLI 的基本指令結構通常如下：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">gemini [指令] [參數]</span><br></pre></td></tr></table></figure>
+
+<p>例如，要向 Gemini 提問：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">gemini ask <span class="string">&quot;請解釋什麼是 RESTful API？&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p>具體的指令和參數會根據 Gemini CLI 的功能而有所不同。您可以使用 <code>gemini --help</code> 或 <code>gemini [指令] --help</code> 來查看可用的指令和選項。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">gemini --<span class="built_in">help</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">gemini ask --<span class="built_in">help</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="如何與-Gemini-CLI-互動？"><a href="#如何與-Gemini-CLI-互動？" class="headerlink" title="如何與 Gemini CLI 互動？"></a>如何與 Gemini CLI 互動？</h2><p>與 Gemini CLI 的互動非常直觀，就像與一位資深的開發夥伴對話一樣。您只需在命令列中輸入您的問題或指令，Gemini CLI 便會嘗試理解並執行。</p>
+<h3 id="1-提問與查詢"><a href="#1-提問與查詢" class="headerlink" title="1. 提問與查詢"></a>1. 提問與查詢</h3><p>您可以向 Gemini CLI 提出各種問題，無論是程式設計概念、特定函式庫的使用方法，或是除錯技巧。</p>
+<p><strong>範例：</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">請問 JavaScript 中的閉包（Closure）是什麼？</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">如何在 Python 中讀取 CSV 檔案？</span><br></pre></td></tr></table></figure>
+
+<h3 id="2-檔案操作"><a href="#2-檔案操作" class="headerlink" title="2. 檔案操作"></a>2. 檔案操作</h3><p>Gemini CLI 可以幫助您管理專案檔案。您可以要求它讀取檔案內容、搜尋特定模式，甚至修改檔案。</p>
+<p><strong>範例：</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">讀取 `src/main.js` 的內容。</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">在 `utils/helper.js` 中搜尋所有 `TODO` 註解。</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">將 `config.js` 中的 `DEBUG = <span class="literal">true</span>` 改為 `DEBUG = <span class="literal">false</span>`。</span><br></pre></td></tr></table></figure>
+
+<h3 id="3-執行-Shell-指令"><a href="#3-執行-Shell-指令" class="headerlink" title="3. 執行 Shell 指令"></a>3. 執行 Shell 指令</h3><p>當需要執行系統指令時，Gemini CLI 也能代勞。它會在執行前告知您指令的意圖，確保操作安全。</p>
+<p><strong>範例：</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">安裝專案的 npm 依賴。</span><br></pre></td></tr></table></figure>
+
+<p>（Gemini CLI 可能會回應：<code>我將執行 npm install。這將會安裝 package.json 中定義的所有依賴。</code>）</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">列出當前目錄下的所有檔案。</span><br></pre></td></tr></table></figure>
+
+<h3 id="4-程式碼生成與修改"><a href="#4-程式碼生成與修改" class="headerlink" title="4. 程式碼生成與修改"></a>4. 程式碼生成與修改</h3><p>這是 Gemini CLI 最強大的功能之一。您可以描述您的需求，讓它生成程式碼片段，甚至協助您重構現有程式碼。</p>
+<p><strong>範例：</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">為 `src/auth.py` 中的 `login` 函式撰寫單元測試。</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">將 `components/Button.js` 中的類別組件重構為函式組件。</span><br></pre></td></tr></table></figure>
+
+<h2 id="實際應用場景"><a href="#實際應用場景" class="headerlink" title="實際應用場景"></a>實際應用場景</h2><ul>
+<li><strong>快速原型開發</strong>：快速生成基礎程式碼結構或功能模組。</li>
+<li><strong>除錯與問題解決</strong>：分析錯誤訊息，提供可能的解決方案。</li>
+<li><strong>文件撰寫</strong>：根據程式碼或需求生成技術文件、API 文件。</li>
+<li><strong>學習新技術</strong>：即時查詢不熟悉的語法或概念。</li>
+<li><strong>自動化重複任務</strong>：例如自動化程式碼格式化、依賴更新等。</li>
+</ul>
+<h2 id="結語"><a href="#結語" class="headerlink" title="結語"></a>結語</h2><p>Gemini CLI 是一個不斷學習和進化的工具，它將極大地改變您與程式碼互動的方式。透過自然語言的溝通，您可以將更多精力放在解決核心業務邏輯上，而將繁瑣的、重複性的工作交給 Gemini CLI。開始探索它的潛力，讓您的開發工作更加高效和愉快吧！</p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Gemini/" rel="tag"># Gemini</a>
+              <a href="/tags/CLI/" rel="tag"># CLI</a>
+              <a href="/tags/AI/" rel="tag"># AI</a>
+              <a href="/tags/%E9%96%8B%E7%99%BC%E5%B7%A5%E5%85%B7/" rel="tag"># 開發工具</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2024/07/13/Nuxt3-%E5%A6%82%E4%BD%95%E5%BC%95%E5%85%A5-flowbite/" rel="prev" title="Nuxt3 如何引入 flowbite">
+      <i class="fa fa-chevron-left"></i> Nuxt3 如何引入 flowbite
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+    
+  <div class="comments">
+    <div id="disqus_thread">
+      <noscript>Please enable JavaScript to view the comments powered by Disqus.</noscript>
+    </div>
+  </div>
+  
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目錄
+        </li>
+        <li class="sidebar-nav-overview">
+          本站概要
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%89%8D%E8%A8%80"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Gemini-CLI-%E6%98%AF%E4%BB%80%E9%BA%BC%EF%BC%9F"><span class="nav-number">2.</span> <span class="nav-text">Gemini CLI 是什麼？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%89%E8%A3%9D%E8%88%87%E8%A8%AD%E5%AE%9A"><span class="nav-number">3.</span> <span class="nav-text">安裝與設定</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-%E5%AE%89%E8%A3%9D-Gemini-CLI"><span class="nav-number">3.1.</span> <span class="nav-text">1. 安裝 Gemini CLI</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-%E8%A8%AD%E5%AE%9A-API-Key"><span class="nav-number">3.2.</span> <span class="nav-text">2. 設定 API Key</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-%E5%9F%BA%E6%9C%AC%E6%8C%87%E4%BB%A4%E7%B5%90%E6%A7%8B"><span class="nav-number">3.3.</span> <span class="nav-text">3. 基本指令結構</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%A6%82%E4%BD%95%E8%88%87-Gemini-CLI-%E4%BA%92%E5%8B%95%EF%BC%9F"><span class="nav-number">4.</span> <span class="nav-text">如何與 Gemini CLI 互動？</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-%E6%8F%90%E5%95%8F%E8%88%87%E6%9F%A5%E8%A9%A2"><span class="nav-number">4.1.</span> <span class="nav-text">1. 提問與查詢</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-%E6%AA%94%E6%A1%88%E6%93%8D%E4%BD%9C"><span class="nav-number">4.2.</span> <span class="nav-text">2. 檔案操作</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-%E5%9F%B7%E8%A1%8C-Shell-%E6%8C%87%E4%BB%A4"><span class="nav-number">4.3.</span> <span class="nav-text">3. 執行 Shell 指令</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-%E7%A8%8B%E5%BC%8F%E7%A2%BC%E7%94%9F%E6%88%90%E8%88%87%E4%BF%AE%E6%94%B9"><span class="nav-number">4.4.</span> <span class="nav-text">4. 程式碼生成與修改</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AF%A6%E9%9A%9B%E6%87%89%E7%94%A8%E5%A0%B4%E6%99%AF"><span class="nav-number">5.</span> <span class="nav-text">實際應用場景</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%B5%90%E8%AA%9E"><span class="nav-number">6.</span> <span class="nav-text">結語</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Eero Lai"
+      src="/images/EeroLai.jpg">
+  <p class="site-author-name" itemprop="name">Eero Lai</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">18</span>
+          <span class="site-state-item-name">文章</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">9</span>
+        <span class="site-state-item-name">分類</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">27</span>
+        <span class="site-state-item-name">標籤</span>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/EeroLai" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;EeroLai" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:eero.lai0412@gmail.com" title="E-Mail → mailto:eero.lai0412@gmail.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://twitter.com/EeroLai" title="Twitter → https:&#x2F;&#x2F;twitter.com&#x2F;EeroLai" rel="noopener" target="_blank"><i class="fab fa-twitter fa-fw"></i>Twitter</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2025</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Eero Lai</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 強力驅動
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+<script>
+  function loadCount() {
+    var d = document, s = d.createElement('script');
+    s.src = 'https://eerolai-github-io.disqus.com/count.js';
+    s.id = 'dsq-count-scr';
+    (d.head || d.body).appendChild(s);
+  }
+  // defer loading until the whole page loading is completed
+  window.addEventListener('load', loadCount, false);
+</script>
+<script>
+  var disqus_config = function() {
+    this.page.url = "https://eerolai.github.io/2025/07/03/Gemini-CLI-%E4%BD%BF%E7%94%A8%E6%95%99%E5%AD%B8/";
+    this.page.identifier = "2025/07/03/Gemini-CLI-使用教學/";
+    this.page.title = "Gemini CLI 使用教學：您的智慧型程式開發助手";
+    };
+  NexT.utils.loadComments(document.querySelector('#disqus_thread'), () => {
+    if (window.DISQUS) {
+      DISQUS.reset({
+        reload: true,
+        config: disqus_config
+      });
+    } else {
+      var d = document, s = d.createElement('script');
+      s.src = 'https://eerolai-github-io.disqus.com/embed.js';
+      s.setAttribute('data-timestamp', '' + +new Date());
+      (d.head || d.body).appendChild(s);
+    }
+  });
+</script>
+
+</body>
+</html>

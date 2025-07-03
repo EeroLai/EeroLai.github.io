@@ -157,6 +157,165 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-TW">
+    <link itemprop="mainEntityOfPage" href="https://eerolai.github.io/2025/07/03/Gemini-CLI-%E4%BD%BF%E7%94%A8%E6%95%99%E5%AD%B8/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/EeroLai.jpg">
+      <meta itemprop="name" content="Eero Lai">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Eero的技術筆記">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2025/07/03/Gemini-CLI-%E4%BD%BF%E7%94%A8%E6%95%99%E5%AD%B8/" class="post-title-link" itemprop="url">Gemini CLI 使用教學：您的智慧型程式開發助手</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">發表於</span>
+              
+
+              <time title="創建時間：2025-07-03 21:28:52 / 修改時間：21:30:54" itemprop="dateCreated datePublished" datetime="2025-07-03T21:28:52+08:00">2025-07-03</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分類於</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%B7%A5%E5%85%B7/" itemprop="url" rel="index"><span itemprop="name">工具</span></a>
+                </span>
+            </span>
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Disqus：</span>
+    
+    <a title="disqus" href="/2025/07/03/Gemini-CLI-%E4%BD%BF%E7%94%A8%E6%95%99%E5%AD%B8/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2025/07/03/Gemini-CLI-使用教學/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>在現代軟體開發中，效率與自動化是關鍵。Gemini CLI 是一個由 Google Gemini 模型驅動的智慧型命令列介面（CLI）工具，旨在成為程式開發者的得力助手。它不僅能理解您的自然語言指令，還能執行程式碼、管理檔案、搜尋資訊，甚至協助您撰寫技術文章。本文將帶您了解如何有效利用 Gemini CLI，提升您的開發工作流程。</p>
+<h2 id="Gemini-CLI-是什麼？"><a href="#Gemini-CLI-是什麼？" class="headerlink" title="Gemini CLI 是什麼？"></a>Gemini CLI 是什麼？</h2><p>Gemini CLI 是一個基於大型語言模型（LLM）的互動式代理程式。它能夠：</p>
+<ul>
+<li><p><strong>理解自然語言</strong>：您可以直接用中文或英文提問或下達指令，無需學習複雜的命令語法。</p>
+</li>
+<li><p><strong>執行程式碼</strong>：支援多種程式語言的程式碼執行，並能提供執行結果。</p>
+</li>
+<li><p><strong>檔案系統操作</strong>：讀取、寫入、搜尋檔案，甚至根據您的需求修改檔案內容。</p>
+</li>
+<li><p><strong>專案感知</strong>：了解您當前的工作目錄結構，並能根據專案上下文提供更精準的協助。</p>
+</li>
+<li><p><strong>自動化任務</strong>：協助您完成重複性高或需要大量知識查詢的任務，例如撰寫文件、重構程式碼、除錯等。</p>
+</li>
+</ul>
+<h2 id="安裝與設定"><a href="#安裝與設定" class="headerlink" title="安裝與設定"></a>安裝與設定</h2><p>在使用 Gemini CLI 之前，您需要先進行安裝並設定您的 Google Gemini API Key。</p>
+<h3 id="1-安裝-Gemini-CLI"><a href="#1-安裝-Gemini-CLI" class="headerlink" title="1. 安裝 Gemini CLI"></a>1. 安裝 Gemini CLI</h3><p>Gemini CLI 通常可以透過 npm (Node Package Manager) 進行全域安裝。請確保您的系統已安裝 Node.js 和 npm。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install -g @google/gemini-cli</span><br></pre></td></tr></table></figure>
+
+<p><strong>注意</strong>：請參考 <a target="_blank" rel="noopener" href="https://developers.google.com/gemini/docs/cli">Gemini CLI 官方文件</a> 以獲取最新的安裝指南和系統要求。</p>
+<h3 id="2-設定-API-Key"><a href="#2-設定-API-Key" class="headerlink" title="2. 設定 API Key"></a>2. 設定 API Key</h3><p>Gemini CLI 需要您的 Google Gemini API Key 才能與 Gemini 模型進行通訊。您可以從 Google AI Studio 取得您的 API Key。</p>
+<p>取得 API Key 後，建議將其設定為環境變數，以便 Gemini CLI 自動偵測。</p>
+<p><strong>Linux&#x2F;macOS:</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">export</span> GEMINI_API_KEY=<span class="string">&quot;YOUR_API_KEY&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>Windows (Command Prompt):</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">set</span> GEMINI_API_KEY=<span class="string">&quot;YOUR_API_KEY&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>Windows (PowerShell):</strong></p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$env:GEMINI_API_KEY</span>=<span class="string">&quot;YOUR_API_KEY&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p>為了讓 API Key 持久化，您可以將其加入到您的 shell 設定檔中（例如 <code>~/.bashrc</code>, <code>~/.zshrc</code> 或 Windows 的系統環境變數）。</p>
+<h3 id="3-基本指令結構"><a href="#3-基本指令結構" class="headerlink" title="3. 基本指令結構"></a>3. 基本指令結構</h3><p>Gemini CLI 的基本指令結構通常如下：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">gemini [指令] [參數]</span><br></pre></td></tr></table></figure>
+
+<p>例如，要向 Gemini 提問：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">gemini ask <span class="string">&quot;請解釋什麼是 RESTful API？&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p>具體的指令和參數會根據 Gemini CLI 的功能而有所不同。您可以使用 <code>gemini --help</code> 或 <code>gemini [指令] --help</code> 來查看可用的指令和選項。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">gemini --<span class="built_in">help</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">gemini ask --<span class="built_in">help</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="如何與-Gemini-CLI-互動？"><a href="#如何與-Gemini-CLI-互動？" class="headerlink" title="如何與 Gemini CLI 互動？"></a>如何與 Gemini CLI 互動？</h2><p>與 Gemini CLI 的互動非常直觀，就像與一位資深的開發夥伴對話一樣。您只需在命令列中輸入您的問題或指令，Gemini CLI 便會嘗試理解並執行。</p>
+<h3 id="1-提問與查詢"><a href="#1-提問與查詢" class="headerlink" title="1. 提問與查詢"></a>1. 提問與查詢</h3><p>您可以向 Gemini CLI 提出各種問題，無論是程式設計概念、特定函式庫的使用方法，或是除錯技巧。</p>
+<p><strong>範例：</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">請問 JavaScript 中的閉包（Closure）是什麼？</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">如何在 Python 中讀取 CSV 檔案？</span><br></pre></td></tr></table></figure>
+
+<h3 id="2-檔案操作"><a href="#2-檔案操作" class="headerlink" title="2. 檔案操作"></a>2. 檔案操作</h3><p>Gemini CLI 可以幫助您管理專案檔案。您可以要求它讀取檔案內容、搜尋特定模式，甚至修改檔案。</p>
+<p><strong>範例：</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">讀取 `src/main.js` 的內容。</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">在 `utils/helper.js` 中搜尋所有 `TODO` 註解。</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">將 `config.js` 中的 `DEBUG = <span class="literal">true</span>` 改為 `DEBUG = <span class="literal">false</span>`。</span><br></pre></td></tr></table></figure>
+
+<h3 id="3-執行-Shell-指令"><a href="#3-執行-Shell-指令" class="headerlink" title="3. 執行 Shell 指令"></a>3. 執行 Shell 指令</h3><p>當需要執行系統指令時，Gemini CLI 也能代勞。它會在執行前告知您指令的意圖，確保操作安全。</p>
+<p><strong>範例：</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">安裝專案的 npm 依賴。</span><br></pre></td></tr></table></figure>
+
+<p>（Gemini CLI 可能會回應：<code>我將執行 npm install。這將會安裝 package.json 中定義的所有依賴。</code>）</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">列出當前目錄下的所有檔案。</span><br></pre></td></tr></table></figure>
+
+<h3 id="4-程式碼生成與修改"><a href="#4-程式碼生成與修改" class="headerlink" title="4. 程式碼生成與修改"></a>4. 程式碼生成與修改</h3><p>這是 Gemini CLI 最強大的功能之一。您可以描述您的需求，讓它生成程式碼片段，甚至協助您重構現有程式碼。</p>
+<p><strong>範例：</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">為 `src/auth.py` 中的 `login` 函式撰寫單元測試。</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">將 `components/Button.js` 中的類別組件重構為函式組件。</span><br></pre></td></tr></table></figure>
+
+<h2 id="實際應用場景"><a href="#實際應用場景" class="headerlink" title="實際應用場景"></a>實際應用場景</h2><ul>
+<li><strong>快速原型開發</strong>：快速生成基礎程式碼結構或功能模組。</li>
+<li><strong>除錯與問題解決</strong>：分析錯誤訊息，提供可能的解決方案。</li>
+<li><strong>文件撰寫</strong>：根據程式碼或需求生成技術文件、API 文件。</li>
+<li><strong>學習新技術</strong>：即時查詢不熟悉的語法或概念。</li>
+<li><strong>自動化重複任務</strong>：例如自動化程式碼格式化、依賴更新等。</li>
+</ul>
+<h2 id="結語"><a href="#結語" class="headerlink" title="結語"></a>結語</h2><p>Gemini CLI 是一個不斷學習和進化的工具，它將極大地改變您與程式碼互動的方式。透過自然語言的溝通，您可以將更多精力放在解決核心業務邏輯上，而將繁瑣的、重複性的工作交給 Gemini CLI。開始探索它的潛力，讓您的開發工作更加高效和愉快吧！</p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-TW">
     <link itemprop="mainEntityOfPage" href="https://eerolai.github.io/2024/07/13/Nuxt3-%E5%A6%82%E4%BD%95%E5%BC%95%E5%85%A5-flowbite/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -980,95 +1139,6 @@
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-TW">
-    <link itemprop="mainEntityOfPage" href="https://eerolai.github.io/2021/10/17/%E9%80%8F%E9%81%8E%E7%B6%B2%E9%A0%81pathname%E4%BD%BFBootstrap%E7%9A%84Active%E7%94%9F%E6%95%88/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/EeroLai.jpg">
-      <meta itemprop="name" content="Eero Lai">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Eero的技術筆記">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2021/10/17/%E9%80%8F%E9%81%8E%E7%B6%B2%E9%A0%81pathname%E4%BD%BFBootstrap%E7%9A%84Active%E7%94%9F%E6%95%88/" class="post-title-link" itemprop="url">透過網頁pathname使Bootstrap的Active生效</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">發表於</span>
-
-              <time title="創建時間：2021-10-17 01:16:00" itemprop="dateCreated datePublished" datetime="2021-10-17T01:16:00+08:00">2021-10-17</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新於</span>
-                <time title="修改時間：2023-02-22 20:30:16" itemprop="dateModified" datetime="2023-02-22T20:30:16+08:00">2023-02-22</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分類於</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/JavaScript/" itemprop="url" rel="index"><span itemprop="name">JavaScript</span></a>
-                </span>
-            </span>
-
-          
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="far fa-comment"></i>
-      </span>
-      <span class="post-meta-item-text">Disqus：</span>
-    
-    <a title="disqus" href="/2021/10/17/%E9%80%8F%E9%81%8E%E7%B6%B2%E9%A0%81pathname%E4%BD%BFBootstrap%E7%9A%84Active%E7%94%9F%E6%95%88/#disqus_thread" itemprop="discussionUrl">
-      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2021/10/17/透過網頁pathname使Bootstrap的Active生效/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h3 id="1-前言"><a href="#1-前言" class="headerlink" title="1.前言"></a>1.前言</h3><p>前陣子在刻網頁前後端的Template幫助未來開發使用，發現前端頁面 layout 的 nav item 的需要針對 pathname 去判定是否為 <code>active</code> ，由於是 Bootstrap 的關係設定 <code>class</code> 就行了，但還是記錄在這裡未來需要用得時候我能直接過來複製。</p>
-<h3 id="2-Code"><a href="#2-Code" class="headerlink" title="2.Code"></a>2.Code</h3><p>我想用 <code>jQuery</code> 來解決這一件事情也許是最快的，頁面載入時就能自動地去判斷 pathname 去設定對應的 nav item 。</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">$(document).ready(function () &#123;</span><br><span class="line">	$(&#x27;body&#x27;).find(&#x27;a[href=&quot;&#x27; + location.pathname + &#x27;&quot;]&#x27;)　//抓取網頁pathname</span><br><span class="line">    	     .addClass(&#x27;active&#x27;); 　//針對class設定active</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
@@ -1140,18 +1210,18 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">17</span>
+          <span class="site-state-item-count">18</span>
           <span class="site-state-item-name">文章</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">8</span>
+        <span class="site-state-item-count">9</span>
         <span class="site-state-item-name">分類</span></a>
       </div>
       <div class="site-state-item site-state-tags">
-        <span class="site-state-item-count">23</span>
+        <span class="site-state-item-count">27</span>
         <span class="site-state-item-name">標籤</span>
       </div>
   </nav>
@@ -1189,7 +1259,7 @@
 <div class="copyright">
   
   &copy; 
-  <span itemprop="copyrightYear">2024</span>
+  <span itemprop="copyrightYear">2025</span>
   <span class="with-love">
     <i class="fa fa-heart"></i>
   </span>
