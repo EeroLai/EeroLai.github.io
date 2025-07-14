@@ -20,15 +20,15 @@
     var CONFIG = {"hostname":"eerolai.github.io","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"always","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
   </script>
 
-  <meta name="description" content="前言：那次面試，我腦袋空白了你是否也曾有過這樣的經驗？面試時對方拋出一個看似熟悉的問題，明明心裡知道答案卻也聽過，話到嘴邊卻又變得模糊不清。 當「Hoisting」這個詞出現時，我明明記得它的概念，卻無法清晰地向面試官解釋 var、let 和函式之間的差異。那種明明學過，卻無法表達的感覺真的讓人很痛苦。 因此，我決定紀錄下這篇文章。一方面是為了系統性地整理、鞏固自己的知識希望下次能夠想起；另一方面">
+  <meta name="description" content="前言你是否也曾有過這樣的經驗？面試時對方拋出一個看似熟悉的問題，明明心裡知道答案卻也聽過，話到嘴邊卻又變得模糊不清。 當「Hoisting」這個詞出現時，我明明記得它的概念，卻無法清晰地向面試官解釋 var、let 和函式之間的差異。那種明明學過，卻無法表達的感覺真的讓人很痛苦。 因此，我決定紀錄下這篇文章。一方面是為了系統性地整理、鞏固自己的知識希望下次能夠想起；另一方面也希望能分享給所有對 H">
 <meta property="og:type" content="article">
 <meta property="og:title" content="深入淺出 JavaScript Hoisting (提升)：從 var 到 let 與 const">
 <meta property="og:url" content="https://eerolai.github.io/2025/07/14/%E6%B7%B1%E5%85%A5%E6%B7%BA%E5%87%BA-JavaScript-Hoisting/index.html">
 <meta property="og:site_name" content="Eero的技術筆記">
-<meta property="og:description" content="前言：那次面試，我腦袋空白了你是否也曾有過這樣的經驗？面試時對方拋出一個看似熟悉的問題，明明心裡知道答案卻也聽過，話到嘴邊卻又變得模糊不清。 當「Hoisting」這個詞出現時，我明明記得它的概念，卻無法清晰地向面試官解釋 var、let 和函式之間的差異。那種明明學過，卻無法表達的感覺真的讓人很痛苦。 因此，我決定紀錄下這篇文章。一方面是為了系統性地整理、鞏固自己的知識希望下次能夠想起；另一方面">
+<meta property="og:description" content="前言你是否也曾有過這樣的經驗？面試時對方拋出一個看似熟悉的問題，明明心裡知道答案卻也聽過，話到嘴邊卻又變得模糊不清。 當「Hoisting」這個詞出現時，我明明記得它的概念，卻無法清晰地向面試官解釋 var、let 和函式之間的差異。那種明明學過，卻無法表達的感覺真的讓人很痛苦。 因此，我決定紀錄下這篇文章。一方面是為了系統性地整理、鞏固自己的知識希望下次能夠想起；另一方面也希望能分享給所有對 H">
 <meta property="og:locale" content="zh_TW">
 <meta property="article:published_time" content="2025-07-14T07:00:00.000Z">
-<meta property="article:modified_time" content="2025-07-14T12:50:44.571Z">
+<meta property="article:modified_time" content="2025-07-14T12:52:25.086Z">
 <meta property="article:author" content="Eero Lai">
 <meta property="article:tag" content="JavaScript">
 <meta property="article:tag" content="Frontend">
@@ -188,7 +188,7 @@
               <span class="post-meta-item-text">發表於</span>
               
 
-              <time title="創建時間：2025-07-14 15:00:00 / 修改時間：20:50:44" itemprop="dateCreated datePublished" datetime="2025-07-14T15:00:00+08:00">2025-07-14</time>
+              <time title="創建時間：2025-07-14 15:00:00 / 修改時間：20:52:25" itemprop="dateCreated datePublished" datetime="2025-07-14T15:00:00+08:00">2025-07-14</time>
             </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -225,7 +225,7 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <h3 id="前言：那次面試，我腦袋空白了"><a href="#前言：那次面試，我腦袋空白了" class="headerlink" title="前言：那次面試，我腦袋空白了"></a>前言：那次面試，我腦袋空白了</h3><p>你是否也曾有過這樣的經驗？面試時對方拋出一個看似熟悉的問題，明明心裡知道答案卻也聽過，話到嘴邊卻又變得模糊不清。</p>
+        <h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>你是否也曾有過這樣的經驗？面試時對方拋出一個看似熟悉的問題，明明心裡知道答案卻也聽過，話到嘴邊卻又變得模糊不清。</p>
 <p>當「Hoisting」這個詞出現時，我明明記得它的概念，卻無法清晰地向面試官解釋 <code>var</code>、<code>let</code> 和函式之間的差異。那種明明學過，卻無法表達的感覺真的讓人很痛苦。</p>
 <p>因此，我決定紀錄下這篇文章。一方面是為了系統性地整理、鞏固自己的知識希望下次能夠想起；另一方面也希望能分享給所有對 Hoisting 同樣感到有些模糊的朋友。</p>
 <p>現在，就讓我們一起來徹底搞懂這個重要的概念吧！</p>
@@ -371,7 +371,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%89%8D%E8%A8%80%EF%BC%9A%E9%82%A3%E6%AC%A1%E9%9D%A2%E8%A9%A6%EF%BC%8C%E6%88%91%E8%85%A6%E8%A2%8B%E7%A9%BA%E7%99%BD%E4%BA%86"><span class="nav-number">1.</span> <span class="nav-text">前言：那次面試，我腦袋空白了</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BB%80%E9%BA%BC%E6%98%AF-Hoisting-%E6%8F%90%E5%8D%87-%EF%BC%9F"><span class="nav-number">2.</span> <span class="nav-text">什麼是 Hoisting (提升)？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%AE%8A%E6%95%B8%E7%9A%84-Hoisting-Variable-Hoisting"><span class="nav-number">3.</span> <span class="nav-text">變數的 Hoisting (Variable Hoisting)</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-var-%E7%9A%84-Hoisting"><span class="nav-number">3.1.</span> <span class="nav-text">1. var 的 Hoisting</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-let-%E8%88%87-const-%E7%9A%84-Hoisting-%E8%88%87%E6%9A%AB%E6%99%82%E6%80%A7%E6%AD%BB%E5%8D%80-TDZ"><span class="nav-number">3.2.</span> <span class="nav-text">2. let 與 const 的 Hoisting (與暫時性死區 TDZ)</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%87%BD%E5%BC%8F%E7%9A%84-Hoisting-Function-Hoisting"><span class="nav-number">4.</span> <span class="nav-text">函式的 Hoisting (Function Hoisting)</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-%E5%87%BD%E5%BC%8F%E5%AE%A3%E5%91%8A-Function-Declaration"><span class="nav-number">4.1.</span> <span class="nav-text">1. 函式宣告 (Function Declaration)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-%E5%87%BD%E5%BC%8F%E8%A1%A8%E9%81%94%E5%BC%8F-Function-Expression"><span class="nav-number">4.2.</span> <span class="nav-text">2. 函式表達式 (Function Expression)</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%84%AA%E5%85%88%E7%B4%9A%EF%BC%9A%E5%87%BD%E5%BC%8F-gt-%E8%AE%8A%E6%95%B8"><span class="nav-number">5.</span> <span class="nav-text">優先級：函式 &gt; 變數</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%B5%90%E8%AB%96%E8%88%87%E6%9C%80%E4%BD%B3%E5%AF%A6%E8%B8%90"><span class="nav-number">6.</span> <span class="nav-text">結論與最佳實踐</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%89%8D%E8%A8%80"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BB%80%E9%BA%BC%E6%98%AF-Hoisting-%E6%8F%90%E5%8D%87-%EF%BC%9F"><span class="nav-number">2.</span> <span class="nav-text">什麼是 Hoisting (提升)？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%AE%8A%E6%95%B8%E7%9A%84-Hoisting-Variable-Hoisting"><span class="nav-number">3.</span> <span class="nav-text">變數的 Hoisting (Variable Hoisting)</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-var-%E7%9A%84-Hoisting"><span class="nav-number">3.1.</span> <span class="nav-text">1. var 的 Hoisting</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-let-%E8%88%87-const-%E7%9A%84-Hoisting-%E8%88%87%E6%9A%AB%E6%99%82%E6%80%A7%E6%AD%BB%E5%8D%80-TDZ"><span class="nav-number">3.2.</span> <span class="nav-text">2. let 與 const 的 Hoisting (與暫時性死區 TDZ)</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%87%BD%E5%BC%8F%E7%9A%84-Hoisting-Function-Hoisting"><span class="nav-number">4.</span> <span class="nav-text">函式的 Hoisting (Function Hoisting)</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-%E5%87%BD%E5%BC%8F%E5%AE%A3%E5%91%8A-Function-Declaration"><span class="nav-number">4.1.</span> <span class="nav-text">1. 函式宣告 (Function Declaration)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-%E5%87%BD%E5%BC%8F%E8%A1%A8%E9%81%94%E5%BC%8F-Function-Expression"><span class="nav-number">4.2.</span> <span class="nav-text">2. 函式表達式 (Function Expression)</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%84%AA%E5%85%88%E7%B4%9A%EF%BC%9A%E5%87%BD%E5%BC%8F-gt-%E8%AE%8A%E6%95%B8"><span class="nav-number">5.</span> <span class="nav-text">優先級：函式 &gt; 變數</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%B5%90%E8%AB%96%E8%88%87%E6%9C%80%E4%BD%B3%E5%AF%A6%E8%B8%90"><span class="nav-number">6.</span> <span class="nav-text">結論與最佳實踐</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
