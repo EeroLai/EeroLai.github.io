@@ -1,0 +1,601 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.2">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"eerolai.github.io","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"always","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":"gitalk","storage":true,"lazyload":false,"nav":null,"activeClass":"gitalk"},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="前言在開發遊戲的過程中，裝備的去留問題讓我困擾了一段時間：行動結束後，裝備應該丟失還是保留？如果保留，是留在角色身上還是回到倉庫？這些邊界條件散落在各處，邏輯越來越難維護。 最後我決定做一次重構，導入狀態機來統一管理裝備的生命週期，這篇文章記錄我怎麼解決這個問題。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="用狀態機解決 Roguelike 裝備去留問題">
+<meta property="og:url" content="https://eerolai.github.io/2026/02/27/%E7%94%A8%E7%8B%80%E6%85%8B%E6%A9%9F%E8%A7%A3%E6%B1%BA-Roguelike-%E8%A3%9D%E5%82%99%E5%8E%BB%E7%95%99%E5%95%8F%E9%A1%8C/index.html">
+<meta property="og:site_name" content="Eero的技術筆記">
+<meta property="og:description" content="前言在開發遊戲的過程中，裝備的去留問題讓我困擾了一段時間：行動結束後，裝備應該丟失還是保留？如果保留，是留在角色身上還是回到倉庫？這些邊界條件散落在各處，邏輯越來越難維護。 最後我決定做一次重構，導入狀態機來統一管理裝備的生命週期，這篇文章記錄我怎麼解決這個問題。">
+<meta property="og:locale" content="zh_TW">
+<meta property="article:published_time" content="2026-02-26T16:00:00.000Z">
+<meta property="article:modified_time" content="2026-02-27T14:02:51.787Z">
+<meta property="article:author" content="Eero Lai">
+<meta property="article:tag" content="Roguelike">
+<meta property="article:tag" content="狀態機">
+<meta property="article:tag" content="遊戲設計">
+<meta property="article:tag" content="重構">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="https://eerolai.github.io/2026/02/27/%E7%94%A8%E7%8B%80%E6%85%8B%E6%A9%9F%E8%A7%A3%E6%B1%BA-Roguelike-%E8%A3%9D%E5%82%99%E5%8E%BB%E7%95%99%E5%95%8F%E9%A1%8C/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-TW'
+  };
+</script>
+
+  <title>用狀態機解決 Roguelike 裝備去留問題 | Eero的技術筆記</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切換導航欄">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Eero的技術筆記</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">懵懂無知的初心者</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首頁</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>關於</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分類</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>歸檔</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-TW">
+    <link itemprop="mainEntityOfPage" href="https://eerolai.github.io/2026/02/27/%E7%94%A8%E7%8B%80%E6%85%8B%E6%A9%9F%E8%A7%A3%E6%B1%BA-Roguelike-%E8%A3%9D%E5%82%99%E5%8E%BB%E7%95%99%E5%95%8F%E9%A1%8C/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/EeroLai.jpg">
+      <meta itemprop="name" content="Eero Lai">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Eero的技術筆記">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          用狀態機解決 Roguelike 裝備去留問題
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">發表於</span>
+              
+
+              <time title="創建時間：2026-02-27 00:00:00 / 修改時間：22:02:51" itemprop="dateCreated datePublished" datetime="2026-02-27T00:00:00+08:00">2026-02-27</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分類於</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E9%81%8A%E6%88%B2%E9%96%8B%E7%99%BC/" itemprop="url" rel="index"><span itemprop="name">遊戲開發</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>在開發遊戲的過程中，裝備的去留問題讓我困擾了一段時間：行動結束後，裝備應該丟失還是保留？如果保留，是留在角色身上還是回到倉庫？這些邊界條件散落在各處，邏輯越來越難維護。</p>
+<p>最後我決定做一次重構，導入狀態機來統一管理裝備的生命週期，這篇文章記錄我怎麼解決這個問題。</p>
+<span id="more"></span>
+
+<h2 id="背景：問題在哪？"><a href="#背景：問題在哪？" class="headerlink" title="背景：問題在哪？"></a>背景：問題在哪？</h2><p>這個遊戲中，玩家出發前會從倉庫挑選裝備帶進行動（loadout），行動過程中也可能撿到新裝備並替換身上的舊裝。</p>
+<p>問題出在<strong>行動結束時</strong>：</p>
+<ul>
+<li>帶出去的裝備要回倉嗎？</li>
+<li>如果玩家中途換掉了它，那個被替換下來的裝備呢？</li>
+<li>玩家失敗了，裝備要全部消失還是部分保留？</li>
+</ul>
+<p>原本這些規則分散在 UI、Player 腳本等多個地方，條件判斷越加越多，邊界情況越來越難控制。</p>
+<h2 id="解決思路：三個設計原則"><a href="#解決思路：三個設計原則" class="headerlink" title="解決思路：三個設計原則"></a>解決思路：三個設計原則</h2><p>重構的核心是把「誰決定裝備去留」這件事收斂成一個來源，用三個原則組合實現：</p>
+<h3 id="1-Single-Source-of-Truth（單一資料來源）"><a href="#1-Single-Source-of-Truth（單一資料來源）" class="headerlink" title="1. Single Source of Truth（單一資料來源）"></a>1. Single Source of Truth（單一資料來源）</h3><p>行動期間，所有需要被追蹤的裝備都記錄在 <code>GameManager.operation_equipment_ledger</code>（以下簡稱 <strong>ledger</strong>）。<br>任何關於裝備的決策都從這裡查，不從 UI 或 Player 腳本分散讀取。</p>
+<h3 id="2-Event-driven-Transition（事件驅動狀態更新）"><a href="#2-Event-driven-Transition（事件驅動狀態更新）" class="headerlink" title="2. Event-driven Transition（事件驅動狀態更新）"></a>2. Event-driven Transition（事件驅動狀態更新）</h3><p>裝備的狀態不由外部主動輪詢，而是透過 <code>EventBus.equipment_changed</code> 事件被動更新。<br>裝備被穿上、換下時，系統自動更新 ledger，不需要每個地方都手動寫一次。</p>
+<h3 id="3-End-of-run-Policy-Resolver（結算器）"><a href="#3-End-of-run-Policy-Resolver（結算器）" class="headerlink" title="3. End-of-run Policy Resolver（結算器）"></a>3. End-of-run Policy Resolver（結算器）</h3><p>行動結束時，只執行一次結算，根據 ledger 的最終狀態決定每件裝備的命運，不在多個地方各自判斷。</p>
+<hr>
+<h2 id="資料結構"><a href="#資料結構" class="headerlink" title="資料結構"></a>資料結構</h2><p>Ledger 中每筆裝備記錄長這樣（位於 <code>scripts/autoload/game_manager.gd</code>）：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  &quot;item&quot;: EquipmentData,</span><br><span class="line">  &quot;origin&quot;: &quot;loadout&quot; | &quot;displaced&quot;,</span><br><span class="line">  &quot;state&quot;: &quot;inventory&quot; | &quot;equipped&quot; | &quot;missing&quot;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>兩個欄位分別記錄<strong>裝備的來源</strong>和<strong>當前位置</strong>：</p>
+<table>
+<thead>
+<tr>
+<th>欄位</th>
+<th>值</th>
+<th>說明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>origin</code></td>
+<td><code>loadout</code></td>
+<td>這局從倉庫帶出去的裝備</td>
+</tr>
+<tr>
+<td><code>origin</code></td>
+<td><code>displaced</code></td>
+<td>被 loadout 裝備替換下來的舊裝備</td>
+</tr>
+<tr>
+<td><code>state</code></td>
+<td><code>inventory</code></td>
+<td>目前在玩家背包（未裝備）</td>
+</tr>
+<tr>
+<td><code>state</code></td>
+<td><code>equipped</code></td>
+<td>目前穿在玩家身上</td>
+</tr>
+<tr>
+<td><code>state</code></td>
+<td><code>missing</code></td>
+<td>玩家身上找不到（保險用途）</td>
+</tr>
+</tbody></table>
+<p>只有 <code>loadout</code> 和 <code>displaced</code> 的裝備會被追蹤，行動中撿到的掉落裝備另外管理，不混入 ledger。</p>
+<hr>
+<h2 id="狀態機：裝備的一生"><a href="#狀態機：裝備的一生" class="headerlink" title="狀態機：裝備的一生"></a>狀態機：裝備的一生</h2><p>一件被追蹤的裝備，在一局行動中會經歷以下狀態變化：</p>
+<pre class="mermaid" style="text-align: center;">
+            stateDiagram-v2
+            [*] --> inventory : 進入行動 加入背包
+inventory --> equipped : 穿上裝備
+equipped --> inventory : 卸下裝備
+inventory --> missing : 結算前找不到
+equipped --> missing : 結算前找不到
+equipped --> [*] : 結算 保留在身上
+inventory --> [*] : 結算 複製回倉庫
+missing --> [*] : 結算 略過
+          </pre>
+
+<h3 id="初始進入"><a href="#初始進入" class="headerlink" title="初始進入"></a>初始進入</h3><p>呼叫 <code>apply_operation_loadout_to_player()</code> 時，成功加入玩家背包的 loadout 裝備會寫入 ledger，初始 <code>state=inventory</code>。</p>
+<h3 id="裝備交換"><a href="#裝備交換" class="headerlink" title="裝備交換"></a>裝備交換</h3><p>監聽 <code>_on_equipment_changed(slot, old_item, new_item)</code> 事件，滿足以下條件時，被替換的舊裝會以 <code>origin=displaced</code>、<code>state=inventory</code> 加入 ledger：</p>
+<ul>
+<li><code>new_item</code> 是 ledger 追蹤的裝備（即 loadout 裝備換上去了）</li>
+<li><code>old_item</code> 不在 ledger 中（沒被追蹤過）</li>
+<li><code>old_item</code> 不是這局撿到的掉落裝備</li>
+</ul>
+<h3 id="結算前同步"><a href="#結算前同步" class="headerlink" title="結算前同步"></a>結算前同步</h3><p><code>resolve_operation_equipment_for_lobby(player)</code> 執行前，先呼叫 <code>_sync_operation_equipment_states(player)</code> 掃描玩家當下的真實狀態，將 ledger 中每筆記錄的 <code>state</code> 更新為 <code>equipped</code>、<code>inventory</code> 或 <code>missing</code>。</p>
+<h3 id="回大廳結算"><a href="#回大廳結算" class="headerlink" title="回大廳結算"></a>回大廳結算</h3><p>根據最終 <code>state</code> 決定裝備去向：</p>
+<table>
+<thead>
+<tr>
+<th>state</th>
+<th>結果</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>equipped</code></td>
+<td>保留在角色身上</td>
+</tr>
+<tr>
+<td><code>inventory</code></td>
+<td>從玩家移除，複製回 <code>stash_loot.equipment</code></td>
+</tr>
+<tr>
+<td><code>missing</code></td>
+<td>略過（防禦性處理）</td>
+</tr>
+</tbody></table>
+<p>結算完畢後呼叫 <code>clear_operation_equipment_ledger()</code> 清空記錄。</p>
+<hr>
+<h2 id="與行動掉落裝備的關係"><a href="#與行動掉落裝備的關係" class="headerlink" title="與行動掉落裝備的關係"></a>與行動掉落裝備的關係</h2><p>行動中撿到的裝備（run 掉落）由 <code>run_backpack_loot</code> 另外管理，不進 ledger。兩套系統各自獨立，結算時有執行順序：</p>
+<pre class="mermaid" style="text-align: center;">
+            flowchart TD
+            A[行動結束] --> B{結果}
+B -->|成功撤離| C[保留穿著中的 run 裝備]
+B -->|失敗| F[移除所有 run 掉落裝備]
+C --> D[移除背包中其餘 run 戰利品]
+D --> E[存入倉庫]
+E --> G[同步 ledger 狀態]
+F --> G
+G --> H{ledger 裝備狀態}
+H -->|equipped| I[保留在角色身上]
+H -->|inventory| J[複製回倉庫]
+H -->|missing| K[略過]
+I --> L[清除 ledger 回大廳]
+J --> L
+K --> L
+          </pre>
+
+<hr>
+<h2 id="整體流程總覽"><a href="#整體流程總覽" class="headerlink" title="整體流程總覽"></a>整體流程總覽</h2><pre class="mermaid" style="text-align: center;">
+            flowchart LR
+            A[大廳選好loadout] --> B[進入行動]
+B --> C[loadout裝備寫入ledger]
+C --> D[局內遊玩]
+D --> E{換了裝備?}
+E -->|是| F[舊裝以displaced登記]
+F --> D
+E -->|否| G[行動結束]
+G --> H[run掉落結算]
+H --> I[同步ledger狀態]
+I --> J[ledger結算]
+J --> K[清除ledger回大廳]
+          </pre>
+
+<hr>
+<h2 id="不變量（設計保證）"><a href="#不變量（設計保證）" class="headerlink" title="不變量（設計保證）"></a>不變量（設計保證）</h2><p>這個設計有三條不能被打破的規則：</p>
+<ol>
+<li><strong>Ledger 只追蹤 <code>loadout</code> 和 <code>displaced</code> 裝備</strong>，run 掉落絕對不混入。</li>
+<li><strong>回倉決策只看結算當下的真實位置</strong>，不看裝備歷史上是否曾被穿過。</li>
+<li><strong>回倉時一律 duplicate（複製）到 stash</strong>，避免引用共享造成副作用。</li>
+</ol>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Roguelike/" rel="tag"># Roguelike</a>
+              <a href="/tags/%E7%8B%80%E6%85%8B%E6%A9%9F/" rel="tag"># 狀態機</a>
+              <a href="/tags/%E9%81%8A%E6%88%B2%E8%A8%AD%E8%A8%88/" rel="tag"># 遊戲設計</a>
+              <a href="/tags/%E9%87%8D%E6%A7%8B/" rel="tag"># 重構</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2025/07/14/%E6%B7%B1%E5%85%A5%E6%B7%BA%E5%87%BA-JavaScript-Hoisting/" rel="prev" title="深入淺出 JavaScript Hoisting (提升)：從 var 到 let 與 const">
+      <i class="fa fa-chevron-left"></i> 深入淺出 JavaScript Hoisting (提升)：從 var 到 let 與 const
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+    <div class="comments" id="gitalk-container"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目錄
+        </li>
+        <li class="sidebar-nav-overview">
+          本站概要
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%89%8D%E8%A8%80"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%83%8C%E6%99%AF%EF%BC%9A%E5%95%8F%E9%A1%8C%E5%9C%A8%E5%93%AA%EF%BC%9F"><span class="nav-number">2.</span> <span class="nav-text">背景：問題在哪？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%A7%A3%E6%B1%BA%E6%80%9D%E8%B7%AF%EF%BC%9A%E4%B8%89%E5%80%8B%E8%A8%AD%E8%A8%88%E5%8E%9F%E5%89%87"><span class="nav-number">3.</span> <span class="nav-text">解決思路：三個設計原則</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-Single-Source-of-Truth%EF%BC%88%E5%96%AE%E4%B8%80%E8%B3%87%E6%96%99%E4%BE%86%E6%BA%90%EF%BC%89"><span class="nav-number">3.1.</span> <span class="nav-text">1. Single Source of Truth（單一資料來源）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-Event-driven-Transition%EF%BC%88%E4%BA%8B%E4%BB%B6%E9%A9%85%E5%8B%95%E7%8B%80%E6%85%8B%E6%9B%B4%E6%96%B0%EF%BC%89"><span class="nav-number">3.2.</span> <span class="nav-text">2. Event-driven Transition（事件驅動狀態更新）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-End-of-run-Policy-Resolver%EF%BC%88%E7%B5%90%E7%AE%97%E5%99%A8%EF%BC%89"><span class="nav-number">3.3.</span> <span class="nav-text">3. End-of-run Policy Resolver（結算器）</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%B3%87%E6%96%99%E7%B5%90%E6%A7%8B"><span class="nav-number">4.</span> <span class="nav-text">資料結構</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%8B%80%E6%85%8B%E6%A9%9F%EF%BC%9A%E8%A3%9D%E5%82%99%E7%9A%84%E4%B8%80%E7%94%9F"><span class="nav-number">5.</span> <span class="nav-text">狀態機：裝備的一生</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%88%9D%E5%A7%8B%E9%80%B2%E5%85%A5"><span class="nav-number">5.1.</span> <span class="nav-text">初始進入</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%A3%9D%E5%82%99%E4%BA%A4%E6%8F%9B"><span class="nav-number">5.2.</span> <span class="nav-text">裝備交換</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%B5%90%E7%AE%97%E5%89%8D%E5%90%8C%E6%AD%A5"><span class="nav-number">5.3.</span> <span class="nav-text">結算前同步</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%9B%9E%E5%A4%A7%E5%BB%B3%E7%B5%90%E7%AE%97"><span class="nav-number">5.4.</span> <span class="nav-text">回大廳結算</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%88%87%E8%A1%8C%E5%8B%95%E6%8E%89%E8%90%BD%E8%A3%9D%E5%82%99%E7%9A%84%E9%97%9C%E4%BF%82"><span class="nav-number">6.</span> <span class="nav-text">與行動掉落裝備的關係</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%95%B4%E9%AB%94%E6%B5%81%E7%A8%8B%E7%B8%BD%E8%A6%BD"><span class="nav-number">7.</span> <span class="nav-text">整體流程總覽</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%8D%E8%AE%8A%E9%87%8F%EF%BC%88%E8%A8%AD%E8%A8%88%E4%BF%9D%E8%AD%89%EF%BC%89"><span class="nav-number">8.</span> <span class="nav-text">不變量（設計保證）</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Eero Lai"
+      src="/images/EeroLai.jpg">
+  <p class="site-author-name" itemprop="name">Eero Lai</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">20</span>
+          <span class="site-state-item-name">文章</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">11</span>
+        <span class="site-state-item-name">分類</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">33</span>
+        <span class="site-state-item-name">標籤</span>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/EeroLai" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;EeroLai" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:eero.lai0412@gmail.com" title="E-Mail → mailto:eero.lai0412@gmail.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://twitter.com/EeroLai" title="Twitter → https:&#x2F;&#x2F;twitter.com&#x2F;EeroLai" rel="noopener" target="_blank"><i class="fab fa-twitter fa-fw"></i>Twitter</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2026</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Eero Lai</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 強力驅動
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script>
+if (document.querySelectorAll('pre.mermaid').length) {
+  NexT.utils.getScript('//cdn.jsdelivr.net/npm/mermaid@8/dist/mermaid.min.js', () => {
+    mermaid.initialize({
+      theme    : 'forest',
+      logLevel : 3,
+      flowchart: { curve     : 'linear' },
+      gantt    : { axisFormat: '%m/%d/%Y' },
+      sequence : { actorMargin: 50 }
+    });
+  }, window.mermaid);
+}
+</script>
+
+
+  
+
+  
+
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.css">
+
+<script>
+NexT.utils.loadComments(document.querySelector('#gitalk-container'), () => {
+  NexT.utils.getScript('//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js', () => {
+    var gitalk = new Gitalk({
+      clientID    : 'Ov23li2cEruH3CTyFqZt',
+      clientSecret: 'e8e93b33b5a34b13e952428ad4bef61d6add9925',
+      repo        : 'EeroLai.github.io',
+      owner       : 'EeroLai',
+      admin       : ['EeroLai'],
+      id          : 'be08e9f7ac9c1d31d851fa6ddc617616',
+        language: 'zh-TW',
+      distractionFreeMode: true
+    });
+    gitalk.render('gitalk-container');
+  }, window.Gitalk);
+});
+</script>
+
+</body>
+</html>

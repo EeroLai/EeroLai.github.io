@@ -17,7 +17,7 @@
 
 <script id="hexo-configurations">
     var NexT = window.NexT || {};
-    var CONFIG = {"hostname":"eerolai.github.io","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"always","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+    var CONFIG = {"hostname":"eerolai.github.io","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"always","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":"gitalk","storage":true,"lazyload":false,"nav":null,"activeClass":"gitalk"},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
   </script>
 
   <meta property="og:type" content="website">
@@ -157,6 +157,82 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-TW">
+    <link itemprop="mainEntityOfPage" href="https://eerolai.github.io/2026/02/27/%E7%94%A8%E7%8B%80%E6%85%8B%E6%A9%9F%E8%A7%A3%E6%B1%BA-Roguelike-%E8%A3%9D%E5%82%99%E5%8E%BB%E7%95%99%E5%95%8F%E9%A1%8C/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/EeroLai.jpg">
+      <meta itemprop="name" content="Eero Lai">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Eero的技術筆記">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2026/02/27/%E7%94%A8%E7%8B%80%E6%85%8B%E6%A9%9F%E8%A7%A3%E6%B1%BA-Roguelike-%E8%A3%9D%E5%82%99%E5%8E%BB%E7%95%99%E5%95%8F%E9%A1%8C/" class="post-title-link" itemprop="url">用狀態機解決 Roguelike 裝備去留問題</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">發表於</span>
+              
+
+              <time title="創建時間：2026-02-27 00:00:00 / 修改時間：22:02:51" itemprop="dateCreated datePublished" datetime="2026-02-27T00:00:00+08:00">2026-02-27</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分類於</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E9%81%8A%E6%88%B2%E9%96%8B%E7%99%BC/" itemprop="url" rel="index"><span itemprop="name">遊戲開發</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>在開發遊戲的過程中，裝備的去留問題讓我困擾了一段時間：行動結束後，裝備應該丟失還是保留？如果保留，是留在角色身上還是回到倉庫？這些邊界條件散落在各處，邏輯越來越難維護。</p>
+<p>最後我決定做一次重構，導入狀態機來統一管理裝備的生命週期，這篇文章記錄我怎麼解決這個問題。</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2026/02/27/%E7%94%A8%E7%8B%80%E6%85%8B%E6%A9%9F%E8%A7%A3%E6%B1%BA-Roguelike-%E8%A3%9D%E5%82%99%E5%8E%BB%E7%95%99%E5%95%8F%E9%A1%8C/#more" rel="contents">
+                閱讀全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-TW">
     <link itemprop="mainEntityOfPage" href="https://eerolai.github.io/2025/07/14/%E6%B7%B1%E5%85%A5%E6%B7%BA%E5%87%BA-JavaScript-Hoisting/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -195,20 +271,6 @@
             </span>
 
           
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="far fa-comment"></i>
-      </span>
-      <span class="post-meta-item-text">Disqus：</span>
-    
-    <a title="disqus" href="/2025/07/14/%E6%B7%B1%E5%85%A5%E6%B7%BA%E5%87%BA-JavaScript-Hoisting/#disqus_thread" itemprop="discussionUrl">
-      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2025/07/14/深入淺出-JavaScript-Hoisting/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  
 
         </div>
       </header>
@@ -287,20 +349,6 @@
             </span>
 
           
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="far fa-comment"></i>
-      </span>
-      <span class="post-meta-item-text">Disqus：</span>
-    
-    <a title="disqus" href="/2025/07/03/Gemini-CLI-%E4%BD%BF%E7%94%A8%E6%95%99%E5%AD%B8/#disqus_thread" itemprop="discussionUrl">
-      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2025/07/03/Gemini-CLI-使用教學/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  
 
         </div>
       </header>
@@ -446,20 +494,6 @@
             </span>
 
           
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="far fa-comment"></i>
-      </span>
-      <span class="post-meta-item-text">Disqus：</span>
-    
-    <a title="disqus" href="/2024/07/13/Nuxt3-%E5%A6%82%E4%BD%95%E5%BC%95%E5%85%A5-flowbite/#disqus_thread" itemprop="discussionUrl">
-      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2024/07/13/Nuxt3-如何引入-flowbite/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  
 
         </div>
       </header>
@@ -535,20 +569,6 @@
             </span>
 
           
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="far fa-comment"></i>
-      </span>
-      <span class="post-meta-item-text">Disqus：</span>
-    
-    <a title="disqus" href="/2023/11/09/Net-Core-7-Ocelot%E5%9F%BA%E6%9C%AC%E9%85%8D%E7%BD%AE/#disqus_thread" itemprop="discussionUrl">
-      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2023/11/09/Net-Core-7-Ocelot基本配置/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  
 
         </div>
       </header>
@@ -625,20 +645,6 @@
             </span>
 
           
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="far fa-comment"></i>
-      </span>
-      <span class="post-meta-item-text">Disqus：</span>
-    
-    <a title="disqus" href="/2023/05/25/%E5%9F%BA%E6%96%BCC-%E7%A8%8B%E5%BC%8F%E7%A2%BC%E5%9F%B7%E8%A1%8C%E5%A4%B1%E6%95%97%E5%BE%8C%E5%A6%82%E4%BD%95%E5%AF%A6%E7%8F%BE%E9%87%8D%E6%96%B0%E6%93%8D%E4%BD%9C/#disqus_thread" itemprop="discussionUrl">
-      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2023/05/25/基於C-程式碼執行失敗後如何實現重新操作/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  
 
         </div>
       </header>
@@ -715,20 +721,6 @@
             </span>
 
           
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="far fa-comment"></i>
-      </span>
-      <span class="post-meta-item-text">Disqus：</span>
-    
-    <a title="disqus" href="/2023/04/30/%E5%B0%81%E8%A3%9DAxios%E7%AE%A1%E7%90%86api/#disqus_thread" itemprop="discussionUrl">
-      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2023/04/30/封裝Axios管理api/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  
 
         </div>
       </header>
@@ -804,20 +796,6 @@
             </span>
 
           
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="far fa-comment"></i>
-      </span>
-      <span class="post-meta-item-text">Disqus：</span>
-    
-    <a title="disqus" href="/2023/02/22/NET-Core-6-MVC-%E5%B0%88%E6%A1%88%E5%BB%BA%E7%AB%8B%E8%B3%87%E6%96%99%E5%A4%BE%E7%B5%90%E6%A7%8B/#disqus_thread" itemprop="discussionUrl">
-      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2023/02/22/NET-Core-6-MVC-專案建立資料夾結構/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  
 
         </div>
       </header>
@@ -899,20 +877,6 @@
             </span>
 
           
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="far fa-comment"></i>
-      </span>
-      <span class="post-meta-item-text">Disqus：</span>
-    
-    <a title="disqus" href="/2023/02/08/LRU-Least-Recently-Used-Cache-%E7%AD%86%E8%A8%98/#disqus_thread" itemprop="discussionUrl">
-      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2023/02/08/LRU-Least-Recently-Used-Cache-筆記/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  
 
         </div>
       </header>
@@ -994,20 +958,6 @@
             </span>
 
           
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="far fa-comment"></i>
-      </span>
-      <span class="post-meta-item-text">Disqus：</span>
-    
-    <a title="disqus" href="/2022/10/23/Nuxt3-Pinia-%E9%85%8D%E7%BD%AE%E7%AD%86%E8%A8%98/#disqus_thread" itemprop="discussionUrl">
-      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2022/10/23/Nuxt3-Pinia-配置筆記/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  
 
         </div>
       </header>
@@ -1022,101 +972,6 @@
           <!--noindex-->
             <div class="post-button">
               <a class="btn" href="/2022/10/23/Nuxt3-Pinia-%E9%85%8D%E7%BD%AE%E7%AD%86%E8%A8%98/#more" rel="contents">
-                閱讀全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-TW">
-    <link itemprop="mainEntityOfPage" href="https://eerolai.github.io/2022/10/17/Nuxt3-%E9%85%8D%E7%BD%AE%E7%AD%86%E8%A8%98/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/EeroLai.jpg">
-      <meta itemprop="name" content="Eero Lai">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Eero的技術筆記">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2022/10/17/Nuxt3-%E9%85%8D%E7%BD%AE%E7%AD%86%E8%A8%98/" class="post-title-link" itemprop="url">Nuxt3 配置筆記</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">發表於</span>
-
-              <time title="創建時間：2022-10-17 19:32:25" itemprop="dateCreated datePublished" datetime="2022-10-17T19:32:25+08:00">2022-10-17</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新於</span>
-                <time title="修改時間：2023-02-22 20:30:16" itemprop="dateModified" datetime="2023-02-22T20:30:16+08:00">2023-02-22</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分類於</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Nuxt3/" itemprop="url" rel="index"><span itemprop="name">Nuxt3</span></a>
-                </span>
-            </span>
-
-          
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="far fa-comment"></i>
-      </span>
-      <span class="post-meta-item-text">Disqus：</span>
-    
-    <a title="disqus" href="/2022/10/17/Nuxt3-%E9%85%8D%E7%BD%AE%E7%AD%86%E8%A8%98/#disqus_thread" itemprop="discussionUrl">
-      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2022/10/17/Nuxt3-配置筆記/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h4 id="介紹"><a href="#介紹" class="headerlink" title="介紹"></a>介紹</h4><p>學習Nuxt3順手把它使用上的重點給記錄下來</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2022/10/17/Nuxt3-%E9%85%8D%E7%BD%AE%E7%AD%86%E8%A8%98/#more" rel="contents">
                 閱讀全文 &raquo;
               </a>
             </div>
@@ -1207,18 +1062,18 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">19</span>
+          <span class="site-state-item-count">20</span>
           <span class="site-state-item-name">文章</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">10</span>
+        <span class="site-state-item-count">11</span>
         <span class="site-state-item-name">分類</span></a>
       </div>
       <div class="site-state-item site-state-tags">
-        <span class="site-state-item-count">29</span>
+        <span class="site-state-item-count">33</span>
         <span class="site-state-item-name">標籤</span>
       </div>
   </nav>
@@ -1256,7 +1111,7 @@
 <div class="copyright">
   
   &copy; 
-  <span itemprop="copyrightYear">2025</span>
+  <span itemprop="copyrightYear">2026</span>
   <span class="with-love">
     <i class="fa fa-heart"></i>
   </span>
@@ -1310,22 +1165,25 @@
 
 
 
-
-
-  
-
-  
-
 <script>
-  function loadCount() {
-    var d = document, s = d.createElement('script');
-    s.src = 'https://eerolai-github-io.disqus.com/count.js';
-    s.id = 'dsq-count-scr';
-    (d.head || d.body).appendChild(s);
-  }
-  // defer loading until the whole page loading is completed
-  window.addEventListener('load', loadCount, false);
+if (document.querySelectorAll('pre.mermaid').length) {
+  NexT.utils.getScript('//cdn.jsdelivr.net/npm/mermaid@8/dist/mermaid.min.js', () => {
+    mermaid.initialize({
+      theme    : 'forest',
+      logLevel : 3,
+      flowchart: { curve     : 'linear' },
+      gantt    : { axisFormat: '%m/%d/%Y' },
+      sequence : { actorMargin: 50 }
+    });
+  }, window.mermaid);
+}
 </script>
+
+
+  
+
+  
+
 
 </body>
 </html>
